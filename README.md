@@ -1,5 +1,9 @@
 # Bilan-CO2
 
+* [Groupe de discutions discord](https://discord.gg/HkAtQwBc)
+
+* [Outil de vision](https://meet.jit.si/)
+
 ## Le groupes
 
 | Nom       | Prénom   | email                                | téléphone      |
