@@ -1,8 +1,5 @@
-## Demandé à l'auteur de l'issue de renseigner les informations suivantes :
-**Auteur de l'issue :** [Votre NOM et Prénom]
-
 ## Titre de l'Issue 
-[Description succincte de la tâche]
+**Auteur de l'issue :** [Votre NOM et Prénom]
 
 ## Description 
 Description détaillée de la tâche de documentation à réaliser, y compris les sections à documenter et les informations à inclure.
