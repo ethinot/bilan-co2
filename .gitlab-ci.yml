@@ -1,0 +1,32 @@
+construction-tache:
+  stage: construction
+  script:
+    - echo "Bonjour, $GITLAB_USER_LOGIN!"
+
+test-tache1:
+  stage: test
+  script:
+    - echo "---------- INIT TEST A ----------"
+    - echo "Ce test est un TODO futur"
+    - echo "---------- END TEST A -----------"
+
+install-flake8:
+  stage: préparation
+  script:
+    - echo "Installation de Flake8"
+    - pip install flake8
+
+flake8-test:
+  stage: test
+  script:
+    - echo "Exécution de Flake8 pour vérifier le respect des conventions de codage Python"
+    - flake8 --accept-encodings=utf-8 .
+  only:
+    - merge_requests
+    - master
+
+deploiement-prod:
+  stage: déploiement
+  script:
+    - echo "Cette tâche déploie quelque chose de la branche $CI_COMMIT_BRANCH."
+  environment: production
