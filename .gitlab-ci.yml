@@ -25,4 +25,5 @@ deploy:
   before_script:
     - chmod 400 $CI_SSH_KEY
   script:
+    - cd frontend
     - scp -o StrictHostKeyChecking=no -i $CI_SSH_KEY dist/ gitlabci@192.168.75.83:/var/www
