@@ -12,7 +12,7 @@ deploy:
   only:
     - vuejs-local-setup
   before_script:
-    - chmod 400 $CI_SSH_KEY
+    - chmod 700 $CI_SSH_KEY
   script:
     - cd frontend
     - npm install 
