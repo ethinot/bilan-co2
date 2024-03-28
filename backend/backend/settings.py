@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-9#7suvhx)0md^o7*b!tcl9mwmz(i8+6x$#3(ty4d69=gaq$jtp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '192.168.75.*']
 
 
 # Application definition
@@ -80,6 +80,17 @@ DATABASES = {
     }
 }
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'emissionTracker',
+        'USER': 'admin',
+        'PASSWORD': 'admin1234',
+        'HOST': '192.168.75.83',
+        'PORT': '',
+    }
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -121,3 +132,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+import os
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
