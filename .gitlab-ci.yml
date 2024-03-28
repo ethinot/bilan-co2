@@ -5,15 +5,7 @@ cache:
     - node_modules/
 
 stages:
-  - build
   - deploy
-
-build:
-  stage: build
-  script:
-    - cd frontend
-    - npm install
-    - npm run build
 
 deploy:
   stage: deploy
@@ -23,5 +15,6 @@ deploy:
     - chmod 400 $CI_SSH_KEY
   script:
     - cd frontend
-    - ls
+    - npm install
+    - npm run build
     - scp -o StrictHostKeyChecking=no -i $CI_SSH_KEY dist/ gitlabci@192.168.75.83:/var/www
