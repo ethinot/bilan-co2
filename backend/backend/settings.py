@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-9#7suvhx)0md^o7*b!tcl9mwmz(i8+6x$#3(ty4d69=gaq$jtp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '192.168.75.*']
+ALLOWED_HOSTS = ['localhost', '*']
 
 
 # Application definition
@@ -75,15 +75,8 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
-DATABASES = {
-    'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'emissionTracker',
+        'NAME': 'emissiontracker',
         'USER': 'admin',
         'PASSWORD': 'admin1234',
         'HOST': '192.168.75.83',
