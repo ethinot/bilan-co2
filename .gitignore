@@ -104,7 +104,8 @@ env/
 venv/ 
 ENV/ 
 env.bak/ 
-venv.bak/ 
+venv.bak/
+emissionTracker/ 
 ./env/*
 ./emissionTracker/*
 
@@ -138,3 +139,4 @@ GitHub.sublime-settings
 !.vscode/launch.json 
 !.vscode/extensions.json 
 .history
+emissionTracker/lib/python3.12/site-packages/django/conf/locale/ga/__pycache__/formats.cpython-312.pyc
