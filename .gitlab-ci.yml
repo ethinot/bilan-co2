@@ -39,6 +39,7 @@ django-tests:
 migrations:
   stage: build
   script:
+    - cd ./backend
     - python3 manage.py makemigrations 
     # - python3 manage.py makemigrations myapp
     - python3 manage.py migrate --noinput
