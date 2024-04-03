@@ -1,0 +1,21 @@
+frontend:
+  image: node:latest
+
+  cache:
+    paths:
+      - node_modules/
+
+  only:
+    changes:
+      - "frontend/**/*"
+    refs:
+      - main
+
+  before_script:
+    - chmod 700 $CI_SSH_KEY
+
+  script:
+    - cd frontend
+    - npm install
+    - npm run build
+    - scp -r -o StrictHostKeyChecking=no -i $CI_SSH_KEY dist/* gitlabci@192.168.75.83:/var/www/dist/
