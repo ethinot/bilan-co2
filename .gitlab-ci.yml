@@ -5,9 +5,6 @@ frontend:
     paths:
       - node_modules/
 
-  stages:
-    - deploy
-
   only:
     changes:
       - "frontend/**/*"
@@ -22,3 +19,4 @@ frontend:
     - npm install
     - npm run build
     - scp -r -o StrictHostKeyChecking=no -i $CI_SSH_KEY dist/* gitlabci@192.168.75.83:/var/www/dist/
+
