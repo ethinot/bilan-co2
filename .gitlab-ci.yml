@@ -1,16 +1,17 @@
-image: node:latest
+frontend:
+  image: node:latest
+  
+  cache:
+    paths:
+      - node_modules/
+  
+  stages:
+    - deploy
 
-cache:
-  paths:
-    - node_modules/
-
-stages:
-  - deploy
-
-deploy:
-  stage: deploy
   only:
-    - vuejs-local-setup
+    - main
+    changes:
+      - "frontend/**/*"
   before_script:
     - chmod 700 $CI_SSH_KEY
   script:
