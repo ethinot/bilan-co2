@@ -1,6 +1,26 @@
 asgiref==3.8.1
-Django==5.0.3
 gunicorn==21.2.0
 packaging==24.0
 psycopg2-binary==2.9.9
 sqlparse==0.4.4
+
+django==5.0.3
+    # via
+    #   -r requirements.in
+    #   django-cors-headers
+    #   djangorestframework
+    #   djangorestframework-simplejwt
+    #   djoser
+    #   social-auth-app-django
+django-cors-headers==3.14.0
+    # via -r requirements.in
+django-templated-mail==1.1.1
+    # via djoser
+djangorestframework==3.14.0
+    # via
+    #   -r requirements.in
+    #   djangorestframework-simplejwt
+djangorestframework-simplejwt==5.2.2
+    # via
+    #   -r requirements.in
+    #   djoser
