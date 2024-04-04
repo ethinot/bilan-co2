@@ -1,0 +1,6 @@
+include:
+  - local: '.gitlab-ci/backend-ci.yml'
+  - local: '.gitlab-ci/frontend-ci.yml'
+  - local: '.gitlab-ci/sonarqube-ci.yml'
+
+
