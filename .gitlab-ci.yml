@@ -1,3 +1,10 @@
+stages:
+  - build
+  - test
+  - deploy
+  - sonarqube-check
+  - sonarqube-vulnerability-report
+
 include:
   - local: '.gitlab-ci/backend-ci.yml'
   - local: '.gitlab-ci/frontend-ci.yml'
