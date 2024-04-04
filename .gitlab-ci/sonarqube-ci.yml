@@ -4,6 +4,8 @@ stages:
 
 sonarqube-check:
   stage: sonarqube-check
+  inherit:
+    default: false
   image: 
     name: sonarsource/sonar-scanner-cli:5.0
     entrypoint: [""]
@@ -24,6 +26,8 @@ sonarqube-check:
 
 sonarqube-vulnerability-report:
   stage: sonarqube-vulnerability-report
+  inherit:
+    default: false
   script:
     - apt-get update
     - apt-get install -y curl
