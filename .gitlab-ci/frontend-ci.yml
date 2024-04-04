@@ -1,4 +1,7 @@
 frontend:
+  inherit:
+    default: false
+
   image: node:latest
 
   cache:
