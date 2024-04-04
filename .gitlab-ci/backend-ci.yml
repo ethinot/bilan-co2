@@ -25,6 +25,8 @@ migrations:
   only:
     changes:
       - "backend/**/*"
+    refs:
+      - main
   script:
     - cd ./backend
     - python3 manage.py makemigrations 
@@ -36,6 +38,8 @@ migrations:
 django-tests:
   stage: test
   only:
+    changes:
+      - "backend/**/*"
     refs:
       - main
   script:
@@ -48,6 +52,8 @@ django-tests:
 deploy:
   stage: deploy
   only:
+    changes:
+      - "backend/**/*"
     refs:
       - main
   script:
