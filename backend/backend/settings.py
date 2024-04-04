@@ -67,6 +67,12 @@ TEMPLATES = [
     },
 ]
 
+
+
+
+
+
+
 WSGI_APPLICATION = 'backend.wsgi.application'
 
 
