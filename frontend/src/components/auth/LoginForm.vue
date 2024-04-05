@@ -1,6 +1,7 @@
 <script setup>
 import CardWrapper from "../ui/CardWrapper.vue";
 import { LoginSchema } from "../../validation/auth";
+import { Form, Field, ErrorMessage } from "vee-validate";
 </script>
 
 <template>
