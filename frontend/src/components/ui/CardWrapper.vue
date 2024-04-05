@@ -4,7 +4,7 @@
       <h2 class="text-xl font-semibold w-fit m-auto">{{ headerTitle }}</h2>
     </header>
     <main class="m-4"><slot></slot></main>
-    <footer class="flex items-center justify-center">
+    <footer class="flex items-center justify-center m-4">
       <a :href="backButtonUrl" class="underline">{{ backButtonLabel }}</a>
     </footer>
   </div>
