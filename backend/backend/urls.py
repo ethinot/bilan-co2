@@ -23,5 +23,6 @@ urlpatterns = [
     path('api/v1/', include('djoser.urls')),
     path('api/v1/', include('djoser.urls.authtoken')),
 
-    path('api/v1/users/', views.User_data),
+    path('api/v1/users_data/', views.User_data),
+    path('api/v1/user_data/<str:id_user>/', views.User_data)
 ]

@@ -14,13 +14,10 @@ class User_data(models.Model):
     # ... # TODO : modifier les champs en fonction de l'organisation
     champ_n = models.IntegerField(null=True, blank=True)
 
-    class Meta:
-        app_label = 'User_data'
-
     def __str__(self):
-        return str(self.user.username)
+        return str(self.user_tag.username)
     
-#@receiver(post_save, sender=User)
-#def create_user_profile(sender, instance, created, **kwargs):
-#    if created:
-#        User_data.objects.create(user=instance)
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        User_data.objects.create(user_tag=instance)
