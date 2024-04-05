@@ -1,9 +1,5 @@
-<script setup>
-import Login from "./pages/Login.vue";
-</script>
+<script setup></script>
 
 <template>
-  <Login />
+  <router-view></router-view>
 </template>
-
-<style scoped></style>
