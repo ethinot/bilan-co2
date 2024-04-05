@@ -6,7 +6,7 @@ from .models import *
 
 # API views.
 
-def User_data(request, id_user=None):
+def User_data_API(request, id_user=None):
 
     if request.method == 'GET':
         print("request.method == 'GET'")
