@@ -12,6 +12,12 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 
+from dotenv import load_dotenv   #for python-dotenv method
+load_dotenv()                    #load the root file ".env" ATTENTION YOU NEED TO CREATE ON YOUR OWN (ask it from project team)
+
+import os 
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -88,8 +94,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'emissiontracker',
-        'USER': 'admin',
-        'PASSWORD': 'admin1234',
+        'USER': os.environ.get('DATABASE_USERNAME'),
+        'PASSWORD': os.environ.get('DATABASE_USERPASSWORD'),
         'HOST': '192.168.75.83',
         'PORT': '',
     }
