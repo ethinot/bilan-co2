@@ -7,7 +7,7 @@ import Footer from "../components/footer/Footer.vue";
   <div>
     <NavBar class="m-4" />
     <main class="my-8">
-      <slot></slot>
+      <router-view></router-view>
     </main>
     <Footer />
   </div>

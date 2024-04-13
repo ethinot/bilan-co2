@@ -1,12 +1,9 @@
 <script setup>
-import LoginForm from "../components/auth/LoginForm.vue";
-import Layout from "./Layout.vue";
+import LoginForm from "../../components/auth/LoginForm.vue";
 </script>
 
 <template>
-  <Layout>
-    <LoginForm/>
-  </Layout>
+  <LoginForm />
 </template>
 
 <script>
