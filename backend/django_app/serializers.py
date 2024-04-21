@@ -1,8 +1,7 @@
-from rest_framework import routers, serializers, viewsets
-from .models import User_data
+from djoser.serializers import UserCreateSerializer
+from django_app.models import User
 
-class User_Data_Serializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = User_data
-        fields = '__all__'
+class UserCreateSerializer(UserCreateSerializer):
+    class Meta(UserCreateSerializer.Meta):
+        model=User
+        fields=('id', 'email', 'name', 'password')

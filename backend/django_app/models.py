@@ -1,23 +1,77 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.apps import apps
 
-
-
-class User_data(models.Model):
-    user_tag = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+# Custom User Manager
+class UserManager(BaseUserManager):
+    def create_user(self, email, name, is_admin=False, password=None):
+        """
+        Creates and saves a User with the given email, name and password.
+        """
+        if not email:
+            raise ValueError('User must have an email address')
+        user = self.model(
+            email=self.normalize_email(email),
+            name=name,
+            is_admin=is_admin
+        )
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
     
-    champ_1 = models.CharField(null=True, blank=True)
-    champ_2 = models.IntegerField(null=True, blank=True)
-    # ... # TODO : modifier les champs en fonction de l'organisation
-    champ_n = models.IntegerField(null=True, blank=True)
+    def create_superuser(self, email, name, is_admin=True, password=None):
+        """
+        Creates and saves a Superuser with the given email, name and password.
+        """
+        user = self.create_user(
+            email=email,
+            password=password,
+            name=name,
+            is_admin=is_admin
+        )
+        user.is_admin = True
+        user.save(using=self._db)
+        return user
+
+# Custom User Model
+class User(AbstractBaseUser):
+    email = models.EmailField(
+        verbose_name='Email',
+        max_length=255,
+        unique=True,
+    )
+    name = models.CharField(max_length=255)
+    is_active=models.BooleanField(default=True)
+    is_admin=models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    # TODO : rajouter les champs necessaires pour le projet
+
+    objects = UserManager()
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS=['name', 'is_admin']
 
     def __str__(self):
-        return str(self.user_tag.username)
-    
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        User_data.objects.create(user_tag=instance)
+        return self.email
+
+    def get_full_name(self):
+        return self.name
+
+    def has_perm(self, perm, obj=None):
+        "Does the user have a specific permission?"
+        # Simplest possible answer: Yes, always
+        return self.is_admin
+
+    def has_module_perms(self, app_label):
+        "Does the user have permissions to view the app `app_label`?"
+        # Simplest possible answer: Yes, always
+        return True
+
+    @property
+    def is_staff(self):
+        "Is the user a member of staff?"
+        # Simplest possible answer: All admins are staff
+        return self.is_admin
