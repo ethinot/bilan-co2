@@ -28,6 +28,8 @@ migrations:
     refs:
       - main
   script:
+    # check the env file
+    - cat .env
     - cd ./backend
     - python3 manage.py makemigrations 
     # - python3 manage.py makemigrations myapp
@@ -43,8 +45,6 @@ django-tests:
     refs:
       - main
   script:
-    # check the env file
-    - cat .env
     - cd ./backend
     # The MYSQL user only gets permissions for MYSQL_DB, so Django can't create a test database.
     # - echo "GRANT ALL on *.* to '${MYSQL_USER}';"| mysql -u root --password="${MYSQL_ROOT_PASSWORD}" -h mysql
