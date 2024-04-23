@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 from dotenv import load_dotenv   #for python-dotenv method
 load_dotenv()                    #load the root file ".env" ATTENTION YOU NEED TO CREATE ON YOUR OWN (ask it from project team)
@@ -37,7 +38,6 @@ ALLOWED_HOSTS = ['localhost', '*']
 # Application definition
 
 INSTALLED_APPS = [
-    'django_app',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     'djoser',
+    'django_app',
 ]
 
 CORS_ALLOWED_ORIGINS = [
@@ -101,14 +102,6 @@ DATABASES = {
     }
 }
 
-#DATABASES = {
-#    "default": {
-#        "ENGINE": "django.db.backends.sqlite3",
-#        "NAME": "db.sqlite3",
-#    }
-#}
-
-
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -149,6 +142,24 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Custom User Model
+AUTH_USER_MODEL = 'django_app.User'
+
+# JWT Configuration
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+# JWT Settings
+SIMPLE_JWT = {
+    'AUTH_HEADER_TYPES': ('JWT',),
+}
 
 import os
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
