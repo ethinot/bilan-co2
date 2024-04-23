@@ -28,6 +28,10 @@ migrations:
     refs:
       - main
   script:
+    # check the env file
+    - ls -al
+    - pwd
+    - cat .env
     - cd ./backend
     - python3 manage.py makemigrations 
     # - python3 manage.py makemigrations myapp
