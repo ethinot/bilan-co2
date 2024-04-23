@@ -1,47 +1,66 @@
-from rest_framework import status
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from django_app.models import User
-from django_app.serializers import UserCreateSerializer
+from rest_framework.parsers import JSONParser, MultiPartParser
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse, JsonResponse
+from .serializers import *
 
-@api_view(['GET', 'POST'])
-def user_list(request):
-    """
-    List all users or create a new user.
-    """
+
+@csrf_exempt
+def User_data(request, id_user=None):
+
     if request.method == 'GET':
-        users = User.objects.all()
-        serializer = UserCreateSerializer(users, many=True)
-        return Response(serializer.data)
+        if id_user is None:
+            utilisateurs = User_data.objects.all()
+            serializer = UserDataSerializer(utilisateurs, many=True)
+            return JsonResponse(serializer.data, safe=False)
+        else:
+            try:
+                utilisateur = User_data.objects.get(user=id_user)
+                serializer = UserDataSerializer(utilisateur)
+                return JsonResponse(serializer.data)
+            except User_data.DoesNotExist:
+                return JsonResponse({'message': 'Utilisateur non trouvé'}, status=404)
 
     elif request.method == 'POST':
-        serializer = UserCreateSerializer(data=request.data)
+        data = request.POST.copy()
+        serializer = UserDataSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-@api_view(['GET', 'PUT', 'DELETE'])
-def user_detail(request, pk):
-    """
-    Retrieve, update or delete a user instance.
-    """
-    try:
-        user = User.objects.get(pk=pk)
-    except User.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-    if request.method == 'GET':
-        serializer = UserCreateSerializer(user)
-        return Response(serializer.data)
+            return JsonResponse(serializer.data, status=201)
+        return JsonResponse(serializer.errors, status=400)
 
     elif request.method == 'PUT':
-        serializer = UserCreateSerializer(user, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        if id_user is not None:
+            try:
+                utilisateur = User_data.objects.get(user=id_user)
+                data = request.POST.copy()
+                serializer = UserDataSerializer(utilisateur, data=data)
+                if serializer.is_valid():
+                    serializer.save()
+                    return JsonResponse(serializer.data)
+                return JsonResponse(serializer.errors, status=400)
+            except User_data.DoesNotExist:
+                return JsonResponse({'message': 'Utilisateur non trouvé'}, status=404)
+
+    elif request.method == 'PATCH':
+        if id_user is not None:
+            try:
+                utilisateur = User_data.objects.get(user=id_user)
+                data = request.POST.copy()
+                serializer = UserDataSerializer(utilisateur, data=data, partial=True)
+                if serializer.is_valid():
+                    serializer.save()
+                    return JsonResponse(serializer.data)
+                return JsonResponse(serializer.errors, status=400)
+            except User_data.DoesNotExist:
+                return JsonResponse({'message': 'Utilisateur non trouvé'}, status=404)
 
     elif request.method == 'DELETE':
-        user.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        if id_user is not None:
+            try:
+                utilisateur = User_data.objects.get(user=id_user)
+                utilisateur.delete()
+                return HttpResponse(status=204)
+            except User_data.DoesNotExist:
+                return JsonResponse({'message': 'Utilisateur non trouvé'}, status=404)
+
+    return JsonResponse({'message': 'Méthode non autorisée'}, status=405)

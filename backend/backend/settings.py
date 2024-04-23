@@ -168,15 +168,5 @@ SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('JWT',),
 }
 
-# Djoser settings
-DJOSER = {
-    'LOGIN_FIELD': 'email',
-    'SERIALIZERS':{
-        'user_create': 'django_app.serializers.UserCreateSerializer',
-        'user': 'django_app.serializers.UserCreateSerializer',
-        'user_delete': 'djoser.serializers.UserDeleteSerializer',
-    },
-}
-
 import os
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
