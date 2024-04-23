@@ -30,7 +30,7 @@ migrations:
   script:
     # check the env file
     - ls -al
-    - echo "$ENV_FILE_CONTENTS" > .env
+    - echo $ENV_FILE_CONTENTS > .env
     - cat .env
     - cd ./backend
     - python3 manage.py makemigrations 
