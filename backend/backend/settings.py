@@ -17,10 +17,8 @@ load_dotenv()                    #load the root file ".env" ATTENTION YOU NEED T
 
 import os 
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -28,8 +26,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY'),
 
-# SECURITY WARNING: don't run with debug turned on in production!
-# TODO : Passed to false for the final deploiement
+# SECURITY WARNING: don't run with debug turned on in production! 
+# TODO : Passed to false for the final deploiement!
 DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '*']
@@ -104,9 +102,6 @@ DATABASES = {
 
 #DATABASES = {
 #    "default": {
-#        "ENGINE": "django.db.backends.sqlite3",
-#        "NAME": "db.sqlite3",
-#    }
 #}
 
 
