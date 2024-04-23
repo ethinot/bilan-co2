@@ -11,3 +11,5 @@ class Transport:
             if self.df.iloc[i].iloc[0].lower() == transport.lower():
                 return self.df.iloc[i].iloc[1]*km
         raise ValueError("transport non valide")
+    def transport_list(self)->list[str]:
+        return list(self.df.iloc[:,0])
