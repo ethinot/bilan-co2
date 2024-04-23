@@ -2,14 +2,17 @@ from django.db import models
 import pandas as pd
 
 # Create your models here.
-class Transport:
-    df = pd.read_csv('transport.csv')
+class BD:
 
-    #calcul le cout en g de C02 pour une distance donné en km
-    def calcul(self,transport:str,km:float)->float:
+    def __init__(self,file:str) -> None:
+        self.df =  pd.read_csv(file)
+        self.name = file[:-4]
+    def calcul(self,choix:str,quantite:float)->float:
         for i in range(len(self.df)-1):
-            if self.df.iloc[i].iloc[0].lower() == transport.lower():
-                return self.df.iloc[i].iloc[1]*km
+            if self.df.iloc[i].iloc[0].lower() == choix.lower():
+                return self.df.iloc[i].iloc[1]*quantite
         raise ValueError("transport non valide")
     def transport_list(self)->list[str]:
         return list(self.df.iloc[:,0])
+    def recherche(self,choix:str) -> list[str]:
+        return [i for i in self.transport_list() if choix.lower() in i.lower()]

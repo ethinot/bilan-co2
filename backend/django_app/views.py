@@ -1,29 +1,28 @@
 # views.py
 import pandas as pd
 from django.http import HttpResponse, JsonResponse
-from django_app.models import Transport
+from django_app.models import BD
 
-tr= Transport()
+tr = BD("transport.csv")
+al = BD("alimentation.csv")
+en = BD("energie.csv")
 
-def get_te(_):
-    
+def calcul_transport(request,transport:str,km:float):
+    if request.method == 'GET':
+        return calcul(tr,transport,km)
 
-    result_value = tr.calcul("ter",100)
 
-    html_content = f"<p>Résultat trouvé : {result_value}</p>"
+def get_transport_list(request):
+    if request.method == 'GET':
+        return JsonResponse(tr.transport_list(),safe=False)
 
-    # Return HTML response
-    return HttpResponse(html_content)
-def calcul_transport(_,transport:str,km:float):
+def recherche_transport(request,transport:str):
+    if request.method == 'GET':
+        return JsonResponse(tr.recherche(transport),safe=False)
+
+def calcul(bd,choix,quantite):
     try:
-        result_value = tr.calcul(transport,km)
+        result_value = bd.calcul(choix,quantite)
         return JsonResponse(result_value,safe=False)
     except(ValueError):
-        return JsonResponse({'message': 'Transport invalide'},status = 404)
-
-
-def get_transport_list(_):
-    return JsonResponse(tr.transport_list(),safe=False)
-
-def recherche_transport(_,transport:str):
-    return JsonResponse([i for i in tr.transport_list() if transport.lower() in i.lower()],safe=False)
+        return JsonResponse({'message': f'{bd.name} invalide'},status = 404)

@@ -22,7 +22,6 @@ register_converter(converters.FloatUrlParameterConverter, 'float')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('test/',views.get_te),
     path('list_transport',views.get_transport_list),
     path('calcul_transport/<str:transport>/<float:km>',views.calcul_transport),
     path('recherche_transport/<str:transport>',views.recherche_transport)
