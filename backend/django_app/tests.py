@@ -39,3 +39,4 @@ class ConsommationModelTestCase(TestCase):
         self.assertEqual(self.consommation.frequence_utilisation, 'JOURNALIER')
         self.assertEqual(self.consommation.quantite_co2, 10.0)
         self.assertEqual(self.consommation.type_consommation, 'FOSSILE')
+        
