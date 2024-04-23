@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 
-from dotenv import load_dotenv   #for python-dotenv method
+from dotenv import load_dotenv
 load_dotenv()                    #load the root file ".env" ATTENTION YOU NEED TO CREATE ON YOUR OWN (ask it from project team)
 
 import os 
