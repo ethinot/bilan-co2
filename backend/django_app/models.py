@@ -6,29 +6,29 @@ from django.apps import apps
 
 # Custom User Manager
 class UserManager(BaseUserManager):
-    def create_user(self, email, name, is_admin=False, password=None):
+    def create_user(self, email, username, is_admin=False, password=None):
         """
-        Creates and saves a User with the given email, name and password.
+        Creates and saves a User with the given email, username and password.
         """
         if not email:
             raise ValueError('User must have an email address')
         user = self.model(
             email=self.normalize_email(email),
-            name=name,
+            username=username,
             is_admin=is_admin
         )
         user.set_password(password)
         user.save(using=self._db)
         return user
     
-    def create_superuser(self, email, name, is_admin=True, password=None):
+    def create_superuser(self, email, username, is_admin=True, password=None):
         """
-        Creates and saves a Superuser with the given email, name and password.
+        Creates and saves a Superuser with the given email, username and password.
         """
         user = self.create_user(
             email=email,
             password=password,
-            name=name,
+            username=username,
             is_admin=is_admin
         )
         user.is_admin = True
@@ -42,23 +42,24 @@ class User(AbstractBaseUser):
         max_length=255,
         unique=True,
     )
-    name = models.CharField(max_length=255)
+    username = models.CharField(max_length=255)
     is_active=models.BooleanField(default=True)
     is_admin=models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     # TODO : rajouter les champs necessaires pour le projet
+    champ_1=models.CharField(max_length=255, null=True)
 
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS=['name', 'is_admin']
+    REQUIRED_FIELDS=['username', 'is_admin']
 
     def __str__(self):
         return self.email
 
-    def get_full_name(self):
-        return self.name
+    def get_full_username(self):
+        return self.username
 
     def has_perm(self, perm, obj=None):
         "Does the user have a specific permission?"

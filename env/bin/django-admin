@@ -1,6 +1,4 @@
-#!/bin/sh
-'''exec' "/home/amine/Bureau/M1 S2/projet_tarnsversale/bilan-co2/env/bin/python3" "$0" "$@"
-' '''
+#!/home/amine/Bureau/M1_S2/projet_transversale/bilan-co2/env/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
