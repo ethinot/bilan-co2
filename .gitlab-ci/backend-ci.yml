@@ -29,9 +29,11 @@ migrations:
       - main
   script:
     # check the env file
-    - ls -al
-    - pwd
+    - echo "DATABASE_USERNAME=$ENV_DATABASE_USERNAME" >> .env
+    - echo "DATABASE_USERPASSWORD=$ENV_DATABASE_USERPASSWORD" >> .env
+    - echo "SECRET_KEY=$ENV_SECRET_KEY" >> .env
     - cat .env
+    - ls -al
     - cd ./backend
     - python3 manage.py makemigrations 
     # - python3 manage.py makemigrations myapp
