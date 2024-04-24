@@ -1,0 +1,273 @@
+{
+	"info": {
+		"_postman_id": "1eb64bf7-34b4-46fb-9938-4583b902cea3",
+		"name": "MIF10 - API api/v1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27625092"
+	},
+	"item": [
+		{
+			"name": "user_v1",
+			"item": [
+				{
+					"name": "En tant qu'utilisateur non connecté je souhaite créer un compte",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "test_v1@postman.com",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "test_v1",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "test1234?",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{basic_url}}/api/v1/users/",
+							"host": [
+								"{{basic_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "En tant qu'utilisateur non connecté je souhaite me connecter",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Vérifier le statut de la réponse",
+									"pm.test(\"Statut de la réponse est 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Extraire le token de la réponse texte",
+									"var responseText = pm.response;",
+									"var authToken;",
+									"",
+									"console.log(responseText)",
+									"",
+									"// Stocker le token dans une variable de collection",
+									"pm.collectionVariables.set(\"authToken\", authToken);",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "password",
+									"value": "test1234?",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "test_v1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{basic_url}}/api/v1/token/login/",
+							"host": [
+								"{{basic_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"token",
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "En tant qu'utilisateur connecté je souhaite me déconnecter",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{basic_url}}/api/v1/token/logout/",
+							"host": [
+								"{{basic_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"token",
+								"logout",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "En tant qu'utilisateur connecté je souhaite accéder à mes données privées",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token ea85de1ab5d95e607cd30e6c7f2b9c42cc95c11a",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{basic_url}}/api/v1/users/me/",
+							"host": [
+								"{{basic_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "En tant qu'utilisateur connecté je souhaite supprimer mon compte",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token ea85de1ab5d95e607cd30e6c7f2b9c42cc95c11a",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "current_password",
+									"value": "test1234?",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{basic_url}}/api/v1/users/me/",
+							"host": [
+								"{{basic_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "inherit"
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "basic_url",
+			"value": "http://127.0.0.1:8000",
+			"type": "string"
+		},
+		{
+			"key": "authToken",
+			"value": ""
+		}
+	]
+}
