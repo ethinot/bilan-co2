@@ -70,3 +70,6 @@ class Consommation(models.Model):
             raise ValidationError("Vous ne pouvez pas spécifier à la fois la fréquence d'utilisation et la date de consommation")
         if not self.frequence_utilisation and not self.date_consommation:
             raise ValidationError("La fréquence d'utilisation ou la date de consommation doit être spécifiée")
+            
+    def __str__(self):
+        return str(self.nom_produit)  
