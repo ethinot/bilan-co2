@@ -19,15 +19,16 @@ class User_data(models.Model):
     profession = models.CharField(max_length=4, choices=profession_choices, blank=True)
 
     def save(self, *args, **kwargs):
-        if self.localisation:
-            # Utilisation de Nominatim pour géocoder la localisation en France
-            geolocator = Nominatim(user_agent="geoapiExercises")
-            location = geolocator.geocode(self.localisation, country_codes='FR')
+        # TODO : probleme à regler 
+        ##if self.localisation:
+        ##    # Utilisation de Nominatim pour géocoder la localisation en France
+        ##    geolocator = Nominatim(user_agent="geoapiExercises")
+        ##    location = geolocator.geocode(self.localisation, country_codes='FR')
 
-            if location:
-                self.localisation = location.address
-            else:
-                raise ValueError("Localisation non valide ou non trouvée")
+        ##    if location:
+        ##        self.localisation = location.address
+        ##    else:
+        ##        raise ValueError("Localisation non valide ou non trouvée")
 
         super(User_data, self).save(*args, **kwargs)
 
