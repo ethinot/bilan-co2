@@ -22,6 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include('djoser.urls')),
     path('api/v1/', include('djoser.urls.jwt')),
-    path('api/v1/user_data/', views.User_data),
-    path('api/v1/user_data/<str:id_user>/', views.User_data, name='User_data'),
+    path('api/v1/user_data/', views.User_data_view),
+    path('api/v1/user_data/<str:id_user>/', views.User_data_view, name='User_data'),
 ]

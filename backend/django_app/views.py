@@ -1,11 +1,12 @@
-from rest_framework.parsers import JSONParser, MultiPartParser
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, JsonResponse
 from .serializers import *
+from .models import *
+
 
 
 @csrf_exempt
-def User_data(request, id_user=None):
+def User_data_view(request, id_user=None):
 
     if request.method == 'GET':
         if id_user is None:
