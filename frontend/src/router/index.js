@@ -9,9 +9,11 @@ import DashboardLayout from "../layouts/DashboardLayout.vue";
 import Home from "../pages/public/Home.vue";
 import Login from "../pages/public/Login.vue";
 import About from "../pages/public/About.vue";
+import Register from '../pages/public/Register.vue';
 
 
 import Dashboard from "../pages/protected/Dashboard.vue";
+import Trackers from '@/pages/protected/Trackers.vue';
 
 
 export const router = createRouter({
@@ -23,6 +25,7 @@ export const router = createRouter({
       children : [
         {path : '' , component  : Home , name : 'home'},
         {path : 'login' , component : Login , name: 'login' },
+        {path : 'register' , component : Register , name : 'register'},
         {path : 'about' , component : About , name : 'about' }
       ]
     },
@@ -30,7 +33,8 @@ export const router = createRouter({
       path : '/dashboard',
       component : DashboardLayout,
       children : [
-        {path : '' , component : Dashboard , name : 'dashboard'}
+        {path : '' , component : Dashboard , name : 'dashboard'},
+        {path : 'trackers' , component : Trackers , name : 'trackers'}
       ]
     }
   ]
