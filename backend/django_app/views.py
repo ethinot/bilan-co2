@@ -1,10 +1,10 @@
 # views.py
 import pandas as pd
 from django.http import HttpResponse, JsonResponse
-from django_app.models import BD
+from django_app.models import BD, Alimentation
 
 tr = BD("transport.csv")
-al = BD("alimentation.csv")
+al = Alimentation("alimentation.csv")
 en = BD("energie.csv")
 
 def calcul_transport(request,transport:str,km:float):
@@ -50,3 +50,24 @@ def calcul(bd,choix,quantite):
         return JsonResponse(result_value,safe=False)
     except(ValueError):
         return JsonResponse({'message': f'{bd.name} invalide'},status = 404)
+    
+def categorie_alimentation(request):
+    if request.method == 'GET':
+        result_value = al.list_categorie()
+        return JsonResponse(result_value,safe=False)
+    
+def select_categorie(request,categorie:str):
+    if request.method == 'GET':
+        try:
+            result_value = al.select_categorie(categorie)
+            return JsonResponse(result_value,safe=False)
+        except(ValueError):
+            return JsonResponse({'message': 'categorie invalide'},status = 404)
+
+def select_sous_categorie(request,sous_categorie:str):
+    if request.method == 'GET':
+        try:
+            result_value = al.select_sous_categorie(sous_categorie)
+            return JsonResponse(result_value,safe=False)
+        except(ValueError):
+            return JsonResponse({'message': 'sous categorie invalide'},status = 404)
