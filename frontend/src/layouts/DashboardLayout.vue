@@ -11,7 +11,7 @@ import SideBar from "../components/dashboard/SideBar.vue";
       <SideBar class="h-full" />
     </div>
     <router-view
-      class="col-start-4 col-end-[-1] row-start-2 row-end-[-1]"
+      class="col-start-4 col-end-[-1] row-start-2 row-end-[-1] overflow-y-scroll bg-slate-50"
     ></router-view>
   </div>
 </template>

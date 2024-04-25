@@ -5,8 +5,8 @@ import ElectricityIcon from "../../assets/electrical.png";
 import OtherIcon from "../../assets/other.png";
 
 import CategoryEmission from "@/components/dashboard/CategoryEmission.vue";
-
 import CarbonDisplayer from "@/components/dashboard/CarbonDisplayer.vue";
+import BarChart from "@/components/dashboard/BarChart.vue";
 </script>
 
 <template>
@@ -36,6 +36,9 @@ import CarbonDisplayer from "@/components/dashboard/CarbonDisplayer.vue";
         label="Were emmited on other categories"
         :categoryIcon="OtherIcon"
       />
+    </div>
+    <div>
+      <BarChart />
     </div>
   </div>
 </template>

@@ -14,7 +14,7 @@ import {
 <template>
   <Card class="w-1/3 m-auto">
     <CardHeader class="text-center">
-      <CardTitle>Welcome Back !</CardTitle>
+      <CardTitle>Welcome !</CardTitle>
     </CardHeader>
     <CardContent>
       <Form

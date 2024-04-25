@@ -1,10 +1,4 @@
 <script setup>
-import {
-  Card,
-  CardTitle,
-  CardHeader,
-  CardContent,
-} from "@/components/ui/card/index";
 </script>
 
 <template>
