@@ -22,7 +22,14 @@ register_converter(converters.FloatUrlParameterConverter, 'float')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('list_transport',views.get_transport_list),
+    path('transport_list',views.transport_list),
     path('calcul_transport/<str:transport>/<float:km>',views.calcul_transport),
-    path('recherche_transport/<str:transport>',views.recherche_transport)
+    path('recherche_transport/<str:transport>',views.recherche_transport),
+    path('alimentation_list',views.alimentation_list),
+    path('calcul_alimentation/<str:produit>/<float:g>',views.calcul_alimentation),
+    path('recherche_alimentation/<str:produit>',views.recherche_alimentation),
+    path('energie_list',views.energie_list),
+    path('calcul_energie/<str:energie>/<float:km>',views.calcul_energie),
+    path('recherche_energie/<str:energie>',views.recherche_energie)
+
 ]

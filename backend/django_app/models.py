@@ -12,7 +12,7 @@ class BD:
             if self.df.iloc[i].iloc[0].lower() == choix.lower():
                 return self.df.iloc[i].iloc[1]*quantite
         raise ValueError("transport non valide")
-    def transport_list(self)->list[str]:
+    def list_value(self)->list[str]:
         return list(self.df.iloc[:,0])
     def recherche(self,choix:str) -> list[str]:
-        return [i for i in self.transport_list() if choix.lower() in i.lower()]
+        return [i for i in self.list_value() if choix.lower() in i.lower()]
