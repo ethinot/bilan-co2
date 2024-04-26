@@ -7,7 +7,19 @@ class UserDataSerializer(serializers.ModelSerializer):
         model = User_data
         fields = '__all__'
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.context['request'].method == 'PATCH':
+            for field_name, field in self.fields.items():
+                field.required = False
+
 class ConsommationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Consommation
         fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.context['request'].method == 'PATCH':
+            for field_name, field in self.fields.items():
+                field.required = False

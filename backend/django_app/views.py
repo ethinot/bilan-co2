@@ -20,7 +20,7 @@ def User_data_view(request):
     if request.method == 'GET':
         try:
             utilisateur = User_data.objects.get(user=request.user)
-            serializer = UserDataSerializer(utilisateur)
+            serializer = UserDataSerializer(utilisateur, context={'request': request})
             return Response(serializer.data)
         except User_data.DoesNotExist:
             return Response({'message': 'Utilisateur non trouvé'}, status=404)
@@ -43,7 +43,7 @@ def update_user_data(request):
         try:
             utilisateur = User_data.objects.get(user=request.user)
             data = request.data
-            serializer = UserDataSerializer(utilisateur, data=data, partial=True)
+            serializer = UserDataSerializer(utilisateur, data=data, partial=True, context={'request': request})
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
@@ -53,6 +53,7 @@ def update_user_data(request):
             
     return Response({'message': 'Méthode non autorisée'}, status=405)
 
+# TODO : supprimer cette fonction car elle ne sert plus à rien car si User supprimé User_data le sera également
 @permission_classes([IsAuthenticated])
 @api_view(['DELETE'])
 def delete_user_data(request):
@@ -92,7 +93,7 @@ def get_consommation_by_user(request):
     """
     try:
         consommations = Consommation.objects.filter(user=request.user)
-        serializer = ConsommationSerializer(consommations, many=True)
+        serializer = ConsommationSerializer(consommations, many=True, context={'request': request})
         return Response(serializer.data)
     except Consommation.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
@@ -116,14 +117,14 @@ def get_consommation_by_id(request, consommation_id):
     """
     try:
         consommation = Consommation.objects.get(user=request.user, id=consommation_id)
-        serializer = ConsommationSerializer(consommation)
+        serializer = ConsommationSerializer(consommation, context={'request': request})
         return Response(serializer.data)
     except Consommation.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
 @permission_classes([IsAuthenticated])
 @api_view(['POST'])
-def create_consommation(request, ):
+def create_consommation(request):
     """
     Create a new consommation for a specific user.
 
@@ -137,14 +138,14 @@ def create_consommation(request, ):
     Raises:
         HTTP_400_BAD_REQUEST: If the request data is invalid.
     """
-    serializer = ConsommationSerializer(data=request.data)
+    serializer = ConsommationSerializer(data=request.data, context={'request': request})
     if serializer.is_valid():
         serializer.save(user=request.user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @permission_classes([IsAuthenticated])
-@api_view(['PUT'])
+@api_view(['PATCH'])
 def update_consommation(request, consommation_id):
     """
     Update an existing consommation for a specific user.
@@ -166,7 +167,7 @@ def update_consommation(request, consommation_id):
     except Consommation.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
-    serializer = ConsommationSerializer(consommation, data=request.data)
+    serializer = ConsommationSerializer(consommation, data=request.data, context={'request': request})
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)

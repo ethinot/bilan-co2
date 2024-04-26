@@ -48,7 +48,7 @@ def save_user_profile(sender, instance, **kwargs):
 class Consommation(models.Model):
     # TODO lié la consommation aux données du csv
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     nom_produit = models.CharField(max_length=255) # TODO : nom du produit en type choice des donnéesCSV. Une idée crée un champ categorie pour facilité la selection
     FREQUENCE_CHOICES = [
         ('JOURNALIER', 'Journalier'),
