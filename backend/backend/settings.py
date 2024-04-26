@@ -25,7 +25,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY'),
+#SECRET_KEY = os.environ.get('SECRET_KEY'),
+SECRET_KEY = 'v+6ks96txfk99+&l=qu4z8ab2up1r$!i+)@#=580r#s!j#4@ej'
 
 # SECURITY WARNING: don't run with debug turned on in production! 
 DEBUG = False  
@@ -89,12 +90,23 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#        'NAME': 'emissiontracker',
+#        'USER': os.environ.get('DATABASE_USERNAME'),
+#        'PASSWORD': os.environ.get('DATABASE_USERPASSWORD'),
+#        'HOST': '192.168.75.83',
+#        'PORT': '',
+#    }
+#}
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'emissiontracker',
-        'USER': os.environ.get('DATABASE_USERNAME'),
-        'PASSWORD': os.environ.get('DATABASE_USERPASSWORD'),
+        'USER': 'admin',
+        'PASSWORD': 'admin1234',
         'HOST': '192.168.75.83',
         'PORT': '',
     }
