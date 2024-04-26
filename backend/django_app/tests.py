@@ -1,6 +1,5 @@
 from django.test import TestCase
 from .models import User_data, Consommation
-from django.core.exceptions import ValidationError 
 from django.contrib.auth.models import User
 from datetime import date
 
