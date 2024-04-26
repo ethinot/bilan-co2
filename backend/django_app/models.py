@@ -27,8 +27,14 @@ class Alimentation(BD):
     filtre = []
     def list_value(self)->list[str]:
         return list(self.df.iloc[:,2])
-    def list_categorie(self) -> list[str]:
-        return list(set(self.df.iloc[:,0]))
+    def list_categorie(self) -> dict[str]:
+        res = {}
+        for i in range(len(self.df.iloc[:,0])):
+            if res.get(self.df.iloc[i,0]):
+                res[self.df.iloc[i,0]].add(self.df.iloc[i,1])
+            else:
+                res[self.df.iloc[i,0]]={self.df.iloc[i,1]}
+        return {k : list(v) for k,v in res.items()}
     def select_categorie(self,categorie : str) -> list[str]:
         l = [self.df.iloc[i,:] for i in range(len(self.df)) if pre_traitement(self.df.iloc[i,0])==pre_traitement(categorie)]
         if l == []:
@@ -47,4 +53,4 @@ class Alimentation(BD):
         for i in range(len(self.filtre)-1):
             if pre_traitement(self.filtre.iloc[i].iloc[2]) == pre_traitement(choix):
 
-                return self.filtre.iloc[i].iloc[3]*quantite
+                return float(self.filtre.iloc[i].iloc[3])*quantite

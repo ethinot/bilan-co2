@@ -9,6 +9,7 @@ en = BD("energie.csv")
 
 def calcul_transport(request,transport:str,km:float):
     if request.method == 'GET':
+        print(transport)
         return calcul(tr,transport,km)
 
 def calcul_alimentation(request,produit:str,g:float):
