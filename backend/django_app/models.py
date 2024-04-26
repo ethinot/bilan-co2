@@ -73,4 +73,4 @@ class Consommation(models.Model):
             raise ValidationError("La fréquence d'utilisation ou la date de consommation doit être spécifiée")
             
     def __str__(self):
-        return str(self.nom_produit)  
+        return str(self.nom_produit)   
