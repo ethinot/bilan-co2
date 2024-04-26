@@ -41,22 +41,22 @@ migrations:
     # - python3 manage.py collectstatic --noinput
     - python3 manage.py check
 
-#django-tests:
-#  stage: test
-#  only:
-#    changes:
-#      - "backend/**/*"
-#    refs:
-#      - main
-#  script:
-#    - echo "DATABASE_USERNAME=$ENV_DATABASE_USERNAME" >> .env
-#    - echo "DATABASE_USERPASSWORD=$ENV_DATABASE_USERPASSWORD" >> .env
-#    - echo "SECRET_KEY=$ENV_SECRET_KEY" >> .env
-#    - cd ./backend
-#    # The MYSQL user only gets permissions for MYSQL_DB, so Django can't create a test database.
-#    # - echo "GRANT ALL on *.* to '${MYSQL_USER}';"| mysql -u root --password="${MYSQL_ROOT_PASSWORD}" -h mysql
-#    # use python3 explicitly. see https://wiki.ubuntu.com/Python/3
-#    #- yes yes | python3 manage.py test
+django-tests:
+  stage: test
+  only:
+    changes:
+      - "backend/**/*"
+    refs:
+      - main
+  script:
+    - echo "DATABASE_USERNAME=$ENV_DATABASE_USERNAME" >> .env
+    - echo "DATABASE_USERPASSWORD=$ENV_DATABASE_USERPASSWORD" >> .env
+    - echo "SECRET_KEY=$ENV_SECRET_KEY" >> .env
+    - cd ./backend
+    # The MYSQL user only gets permissions for MYSQL_DB, so Django can't create a test database.
+    # - echo "GRANT ALL on *.* to '${MYSQL_USER}';"| mysql -u root --password="${MYSQL_ROOT_PASSWORD}" -h mysql
+    # use python3 explicitly. see https://wiki.ubuntu.com/Python/3
+    - yes yes | python3 manage.py test
 
 deploy:
   stage: deploy
