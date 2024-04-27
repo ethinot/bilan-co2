@@ -22,7 +22,6 @@ export async function createUser({username, email, password}){
 
 export async function login({username, password}) {
     try{
-
         const response = await axios.post(`${base_url}/token/login/`,{
             username : username,
             password : password

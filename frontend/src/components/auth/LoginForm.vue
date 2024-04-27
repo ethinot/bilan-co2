@@ -58,7 +58,8 @@ import {
 </template>
 
 <script>
-import { login } from "@/api/auth";
+import { mapActions } from "vuex";
+import { router } from "@/router";
 
 export default {
   data() {
@@ -73,22 +74,15 @@ export default {
       try {
         this.isSending = true;
         this.error = false;
-        const response = await login(values);
-
-        console.log("You are logged in !");
-        console.log(response);
-
-        if (response.status === 200) {
-          this.success = true;
-        } else {
-          this.error = true;
-          this.isSending = false;
-        }
+        const response = await this.login(values);
+        router.push({ name: "dashboard" });
       } catch (error) {
+        console.log(error);
         this.error = true;
         this.isSending = false;
       }
     },
+    ...mapActions(["login"]),
   },
 };
 </script>
