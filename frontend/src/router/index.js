@@ -14,6 +14,8 @@ import Register from '../pages/public/Register.vue';
 
 import Dashboard from "../pages/protected/Dashboard.vue";
 import Trackers from '@/pages/protected/Trackers.vue';
+import TrackersEnergies from '@/pages/protected/TrackersEnergies.vue';
+import TrackersTrips from '@/pages/protected/TrackersTrips.vue';
 
 
 export const router = createRouter({
@@ -34,7 +36,9 @@ export const router = createRouter({
       component : DashboardLayout,
       children : [
         {path : '' , component : Dashboard , name : 'dashboard'},
-        {path : 'trackers' , component : Trackers , name : 'trackers'}
+        {path : 'aliment' , component : Trackers , name : 'aliment'},
+        {path : 'energies' , component : TrackersEnergies , name : 'energies'},
+        {path : 'trips' , component : TrackersTrips , name : 'trips'}
       ]
     }
   ]
