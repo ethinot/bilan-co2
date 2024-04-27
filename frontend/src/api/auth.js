@@ -1,5 +1,4 @@
 import axios from "axios"
-
 import base_url from "./base_url"
 
 export async function createUser({username, email, password}){
@@ -12,12 +11,25 @@ export async function createUser({username, email, password}){
          password   
         });
         
-        console.log(response);
-
         return response;
         
-    }catch(error){
+    }catch(error) {
         console.log(error);
+        throw error;
     }
 
+}
+
+export async function login({username, password}) {
+    try{
+
+        const response = await axios.post(`${base_url}/token/login/`,{
+            username : username,
+            password : password
+        });
+        return response;
+    }catch(error) {
+        console.log(error);
+        throw error;
+    }
 }

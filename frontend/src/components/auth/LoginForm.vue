@@ -17,20 +17,16 @@ import {
       <CardTitle>Welcome !</CardTitle>
     </CardHeader>
     <CardContent>
-      <Form
-        action=""
-        @submit.prevent="submitLogin"
-        :validation-schema="LoginSchema"
-      >
+      <Form action="" @submit="submitLogin" :validation-schema="LoginSchema">
         <div class="w-full my-8">
-          <label for="email" class="block">Email</label>
+          <label for="username" class="block">User name</label>
           <Field
-            id="email"
-            name="email"
-            type="email"
+            id="username"
+            name="username"
+            type="username"
             class="w-full rounded-sm p-2 outline-none border focus-visible:border-[#03C988]"
           />
-          <ErrorMessage name="email" class="text-red-500" />
+          <ErrorMessage name="username" class="text-red-500" />
 
           {{}}
         </div>
@@ -47,7 +43,13 @@ import {
         <Button class="w-full font-semibold"> Login </Button>
       </Form>
     </CardContent>
-    <CardFooter class="w-fit m-auto">
+    <CardFooter class="w-fit m-auto flex flex-col items-center">
+      <p v-if="error" class="w-fit m-auto text-red-500 font-semibold">
+        Something went wrong try again later !
+      </p>
+      <p v-if="success" class="text-green-500 font-semibold">
+        User Logged in successfully !
+      </p>
       <RouterLink class="underline" to="/register"
         >Don't you have an account ?</RouterLink
       >
@@ -56,16 +58,36 @@ import {
 </template>
 
 <script>
+import { login } from "@/api/auth";
+
 export default {
   data() {
     return {
-      email: "",
-      password: "",
+      isSending: false,
+      error: false,
+      success: false,
     };
   },
   methods: {
-    submitLogin() {
-      console.log(this.email, this.password);
+    async submitLogin(values) {
+      try {
+        this.isSending = true;
+        this.error = false;
+        const response = await login(values);
+
+        console.log("You are logged in !");
+        console.log(response);
+
+        if (response.status === 200) {
+          this.success = true;
+        } else {
+          this.error = true;
+          this.isSending = false;
+        }
+      } catch (error) {
+        this.error = true;
+        this.isSending = false;
+      }
     },
   },
 };

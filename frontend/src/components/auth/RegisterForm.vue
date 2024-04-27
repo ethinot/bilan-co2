@@ -54,7 +54,7 @@ import { router } from "@/router/index";
         </Button>
       </Form>
     </CardContent>
-    <CardFooter class="w-fit m-auto">
+    <CardFooter class="w-fit m-auto flex flex-col items-center">
       <p v-if="error" class="text-red-500 font-semibold">
         Something went wrong try again later !
       </p>
