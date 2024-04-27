@@ -9,6 +9,7 @@ import {
   CardFooter,
   CardContent,
 } from "@/components/ui/card/index";
+import { router } from "@/router/index";
 </script>
 
 <template>
@@ -54,10 +55,12 @@ import {
       </Form>
     </CardContent>
     <CardFooter class="w-fit m-auto">
-      <span v-if="error" class="text-red-500 font-semibold"
-        >Something went wrong try again later !</span
-      >
-      <span v-if="success" class="text-green-500 font-semibold"></span>
+      <p v-if="error" class="text-red-500 font-semibold">
+        Something went wrong try again later !
+      </p>
+      <p v-if="success" class="text-green-500 font-semibold">
+        User created successfully !
+      </p>
       <RouterLink class="underline" to="/login"
         >Already have an account ?</RouterLink
       >
@@ -72,20 +75,28 @@ export default {
   data() {
     return {
       isSending: false,
-      error: null,
+      error: false,
       success: false,
     };
   },
   methods: {
     async submitLogin(values) {
       try {
-        console.log("Sending ...");
         this.isSending = true;
-        this.error = null;
+        this.error = false;
         const response = await createUser(values);
-        console.log(response);
+
+        if (response.status === 201) {
+          this.success = true;
+          setTimeout(() => {
+            router.push({ name: "login" });
+          }, 2000);
+        } else {
+          this.error = true;
+          this.isSending = false;
+        }
       } catch (error) {
-        this.error = error.message;
+        this.error = true;
         this.isSending = false;
       }
     },
