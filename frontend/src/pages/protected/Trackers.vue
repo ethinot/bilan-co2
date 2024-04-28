@@ -1,51 +1,49 @@
 <script setup>
-import DropdownMenu from '@/components/ui/dropdown-menu/DropdownMenu.vue';
-import DropdownMenuContent from '@/components/ui/dropdown-menu/DropdownMenuContent.vue';
-import DropdownMenuItem from '@/components/ui/dropdown-menu/DropdownMenuItem.vue';
+import Save from '@/components/save/Save.vue';
 </script>
 
 <template>
  
  <div class="relative ">
-
-  <!--
-    Flyout menu, show/hide based on flyout menu state.
-
-    Entering: "transition ease-out duration-200"
-      From: "opacity-0 translate-y-1"
-      To: "opacity-100 translate-y-0"
-    Leaving: "transition ease-in duration-150"
-      From: "opacity-100 translate-y-0"
-      To: "opacity-0 translate-y-1"
-  -->
   <div class="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4">
-    <div class="w-screen max-w-2xl flex-auto overflow-hidden rounded-3xl bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5">
-      <div class="p-4 grid grid-cols-2">
-        <div class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50" v-for="(subCategories, category) in categories" :key="category"  >
+    <div class="w-screen max-w-5xl flex-auto overflow-hidden rounded-3xl bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5">
+      <div class="p-4 grid grid-cols-2 gap-5">
+        <div class="group relative flex gap-x-6 rounded-lg p-4 max-w-3xl hover:bg-gray-100" v-for="(subCategories, category) in categories" :key="category"  >
           <div class="mt-1 flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
           </div>
-          <div >
-            <a href="#" class="font-semibold text-gray-900">
-              {{ category }}
-              <span class="absolute inset-0"></span>
+          <div class=" max-w-md " >
+            <a href="#" class="flex font-semibold text-gray-900"> 
+              <form class="max-w-sm mx-auto">
+                <label for="countries" class="block mb-2 text-lg font-medium text-gray-900 dark:text-white">{{ category }}</label>
+                <div>
+                  <VueMultiselect
+                  
+                  v-model="multiValues[category]"
+                  :options="subCategories"
+                  :multiple="true" class=" text-md">
+      
+                  </VueMultiselect>
+                </div>
+              </form>
             </a>
             <p class="mt-1 text-gray-600"></p><b/>
           </div>
         </div>
-        
-
       </div>
-      
+      <Save/>
     </div>
   </div>
 </div>
 
-
 </template>
 <script>
+import VueMultiselect from 'vue-multiselect'
+
+
 export default {
   data() {
     return {
+      multiValues: {},
       categories: {
                     "aides culinaires et ingrédients divers": ["aides culinaires", "sauces", "sels", "condiments", "denrées destinées à une alimentation particulière", "herbes", "algues", "ingrédients divers", "épices"],
                     "aliments infantiles": ["desserts infantiles", "petits pots salés et plats infantiles", "céréales et biscuits infantiles", "laits et boissons infantiles"],
@@ -64,3 +62,4 @@ export default {
 }
 
 </script>
+<style src="vue-multiselect/dist/vue-multiselect.css"></style>

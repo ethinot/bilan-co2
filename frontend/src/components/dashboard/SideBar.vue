@@ -19,7 +19,7 @@ import LogoutIcon from "@/assets/logout.png";
             :imageSource="HomeIcon"
           />
         </li>
-        <li class="">
+        <li class="" >
           <SideBarLink @click="toogglevisibility"
             label="Add tracker"
             to=""
