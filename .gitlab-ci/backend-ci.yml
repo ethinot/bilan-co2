@@ -23,12 +23,10 @@ default:
 migrations:
   stage: build
   only:
-    changes:
-      - "backend/**/*"
     refs:
       - main
+      - backend-pipeline
   script:
-    # check the env file
     - echo "DATABASE_USERNAME=$ENV_DATABASE_USERNAME" >> .env
     - echo "DATABASE_USERPASSWORD=$ENV_DATABASE_USERPASSWORD" >> .env
     - echo "SECRET_KEY=$ENV_SECRET_KEY" >> .env
@@ -38,33 +36,32 @@ migrations:
     - python3 manage.py makemigrations 
     - python3 manage.py makemigrations django_app
     - python3 manage.py migrate
-    # - python3 manage.py collectstatic --noinput
     - python3 manage.py check
 
-#django-tests:
-#  stage: test
-#  only:
-#    changes:
-#      - "backend/**/*"
-#    refs:
-#      - main
-#  script:
-#    - echo "DATABASE_USERNAME=$ENV_DATABASE_USERNAME" >> .env
-#    - echo "DATABASE_USERPASSWORD=$ENV_DATABASE_USERPASSWORD" >> .env
-#    - echo "SECRET_KEY=$ENV_SECRET_KEY" >> .env
-#    - cd ./backend
-#    # The MYSQL user only gets permissions for MYSQL_DB, so Django can't create a test database.
-#    # - echo "GRANT ALL on *.* to '${MYSQL_USER}';"| mysql -u root --password="${MYSQL_ROOT_PASSWORD}" -h mysql
-#    # use python3 explicitly. see https://wiki.ubuntu.com/Python/3
-#    - no no | python3 manage.py test
+django-tests:
+ stage: test
+ only:
+   refs:
+     - main
+     - backend-pipeline
+ script:
+    - echo "DATABASE_USERNAME=$ENV_DATABASE_USERNAME" >> .env
+    - echo "DATABASE_USERPASSWORD=$ENV_DATABASE_USERPASSWORD" >> .env
+    - echo "SECRET_KEY=$ENV_SECRET_KEY" >> .env
+    - cd ./backend
+    - export PGPASSWORD=$ENV_DATABASE_USERPASSWORD
+    - databases=$(psql -U $ENV_DATABASE_USERNAME -d emissiontracker -t -c "SELECT datname FROM pg_database WHERE datname LIKE 'test_%';" -A -q)
+    - for db in $databases; do psql -U $ENV_DATABASE_USERNAME -d your_db_name -c "DROP DATABASE IF EXISTS $db;" -W; done
+    # - psql -U $ENV_DATABASE_USERNAME -d your_db_name -c 'CREATE DATABASE your_test_db_name;' -W
+    # - python3 manage.py migrate --database=test
+    - python3 manage.py test
 
 deploy:
   stage: deploy
   only:
-    changes:
-      - "backend/**/*"
     refs:
       - main
+      - backend-pipeline
   script:
     - scp -o StrictHostKeyChecking=no -i $CI_SSH_KEY -r ./$APP_NAME gitlabci@192.168.75.83:/home/gitlabci
     - ssh -o StrictHostKeyChecking=no -i $CI_SSH_KEY -A gitlabci@192.168.75.83 'sudo systemctl restart gunicorn'
