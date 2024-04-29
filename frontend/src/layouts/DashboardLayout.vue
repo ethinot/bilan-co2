@@ -1,5 +1,5 @@
 <script setup>
-import SideBar from "../components/dashboard/SideBar.vue";
+import SideBar from "../components/dashboard/sidebar/SideBar.vue";
 </script>
 
 <template>
