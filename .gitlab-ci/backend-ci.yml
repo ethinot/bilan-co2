@@ -23,15 +23,14 @@ default:
 migrations:
   stage: build
   only:
+    changes:
+      - "backend/**/*"
     refs:
       - main
-      - backend-pipeline
   script:
     - echo "DATABASE_USERNAME=$ENV_DATABASE_USERNAME" >> .env
     - echo "DATABASE_USERPASSWORD=$ENV_DATABASE_USERPASSWORD" >> .env
     - echo "SECRET_KEY=$ENV_SECRET_KEY" >> .env
-    - cat .env
-    - ls -al
     - cd ./backend
     - python3 manage.py makemigrations 
     - python3 manage.py makemigrations django_app
@@ -39,12 +38,13 @@ migrations:
     - python3 manage.py check
 
 django-tests:
- stage: test
- only:
-   refs:
-     - main
-     - backend-pipeline
- script:
+  stage: test
+  only:
+    changes:
+      - "backend/**/*"
+    refs:
+      - main
+  script:
     - echo "DATABASE_USERNAME=$ENV_DATABASE_USERNAME" >> .env
     - echo "DATABASE_USERPASSWORD=$ENV_DATABASE_USERPASSWORD" >> .env
     - echo "SECRET_KEY=$ENV_SECRET_KEY" >> .env
@@ -55,9 +55,10 @@ django-tests:
 deploy:
   stage: deploy
   only:
+    changes:
+      - "backend/**/*"
     refs:
       - main
-      - backend-pipeline
   script:
     - scp -o StrictHostKeyChecking=no -i $CI_SSH_KEY -r ./$APP_NAME gitlabci@192.168.75.83:/home/gitlabci
     - ssh -o StrictHostKeyChecking=no -i $CI_SSH_KEY -A gitlabci@192.168.75.83 'sudo systemctl restart gunicorn'
