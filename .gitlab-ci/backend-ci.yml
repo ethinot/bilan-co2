@@ -42,14 +42,12 @@ django-tests:
   only:
     refs:
       - main
-      - sonarqube-coverage
   script:
     - echo "DATABASE_USERNAME=$ENV_DATABASE_USERNAME" >> .env
     - echo "DATABASE_USERPASSWORD=$ENV_DATABASE_USERPASSWORD" >> .env
     - echo "SECRET_KEY=$ENV_SECRET_KEY" >> .env
     - cd ./backend
     - python3 manage.py makemigrations
-    #- python3 manage.py test
     - coverage run manage.py test
     - coverage xml -o coverage.xml
   artifacts: 
