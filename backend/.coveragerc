@@ -4,3 +4,4 @@ omit =
     */migrations/*
     */asgi.py
     */wsgi.py
+    */views.py
