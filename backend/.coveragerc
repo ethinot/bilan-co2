@@ -2,4 +2,3 @@
 source = django_app
 omit =
     */migrations/*
-    django_app/migrations/*
