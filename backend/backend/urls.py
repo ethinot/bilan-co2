@@ -31,7 +31,7 @@ urlpatterns = [
     path('categorie_alimentation/',views.categorie_alimentation),
     path('select_categorie/<str:categorie>/',views.select_categorie),
     path('select_sous_categorie/<str:sous_categorie>/',views.select_sous_categorie),
-    path('energie_list',views.energie_list),
+    path('energie_list/',views.energie_list),
     path('calcul_energie/<str:energie>/<float:kwh>/',views.calcul_energie),
     path('recherche_energie/<str:energie>/',views.recherche_energie)
 

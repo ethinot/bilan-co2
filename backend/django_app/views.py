@@ -50,7 +50,7 @@ def calcul(bd,choix,quantite):
         result_value = bd.calcul(choix,quantite)
         return JsonResponse(result_value,safe=False)
     except(ValueError):
-        return JsonResponse({'message': f'{bd.name} invalide'},status = 404)
+       return JsonResponse({'message': f'{bd.name} invalide'},status = 404)
     
 def categorie_alimentation(request):
     if request.method == 'GET':

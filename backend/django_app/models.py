@@ -24,7 +24,7 @@ class BD:
         return [i for i in self.list_value() if choix.lower() in i.lower()]
     
 class Alimentation(BD):
-    filtre = []
+    filtre = pd.DataFrame()
     def list_value(self)->list[str]:
         return list(self.df.iloc[:,2])
     def list_categorie(self) -> dict[str]:
@@ -50,11 +50,11 @@ class Alimentation(BD):
             self.filtre = pd.DataFrame(l)
         return list(self.filtre.iloc[:,2])
     def calcul(self,choix:str,quantite:float)->float:
-        if self.filtre == []:
+        if self.filtre.empty:
             f = self.df
         else:
-            f = self.filtre
-        for i in range(len(f)-1):
+            f = self.filtre      
+        for i in range(len(f)):
             if pre_traitement(f.iloc[i].iloc[2]) == pre_traitement(choix):
                 return float(f.iloc[i].iloc[3])*quantite
         raise ValueError("produit non valide")
