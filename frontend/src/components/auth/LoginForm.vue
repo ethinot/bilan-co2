@@ -45,7 +45,7 @@ import {
     </CardContent>
     <CardFooter class="w-fit m-auto flex flex-col items-center">
       <p v-if="error" class="w-fit m-auto text-red-500 font-semibold">
-        Something went wrong try again later !
+        Invalid user name or email
       </p>
       <p v-if="success" class="text-green-500 font-semibold">
         User Logged in successfully !

@@ -34,9 +34,8 @@ export async function login({ username, password }) {
 export async function logout() {
   try {
     const token = store.getters.auth_token;
-    console.log(token);
-    const response = await axios.post(`${base_url}/token/logout/`, {
-      headers: { Authorization: token },
+    const response = await axios.post(`${base_url}/token/logout/`, undefined, {
+      headers: { Authorization: `Token ${token}` },
     });
 
     return response;
