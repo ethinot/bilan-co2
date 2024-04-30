@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@radix-icons/vue": "^1.0.0",
+    "@syncfusion/ej2-vue-dropdowns": "^25.1.41",
     "axios": "^1.6.8",
     "chart.js": "^4.4.2",
     "class-variance-authority": "^0.7.0",
@@ -18,9 +19,11 @@
     "radix-vue": "^1.7.0",
     "tailwind-merge": "^2.2.2",
     "tailwindcss-animate": "^1.0.7",
+    "v-click-outside": "^3.2.0",
     "vee-validate": "^4.12.6",
     "vue": "^3.4.21",
     "vue-chartjs": "^5.3.1",
+    "vue-multiselect": "^3.0.0-beta.3",
     "vue-router": "^4.3.0",
     "vuex": "^4.0.2",
     "yup": "^1.4.0"

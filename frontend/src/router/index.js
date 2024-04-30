@@ -1,5 +1,4 @@
-import { createWebHistory, createRouter } from "vue-router";
-
+import { createWebHistory, createRouter } from 'vue-router'
 import Layout from "../layouts/Layout.vue";
 import DashboardLayout from "../layouts/DashboardLayout.vue";
 
@@ -9,8 +8,9 @@ import About from "../pages/public/About.vue";
 import Register from "../pages/public/Register.vue";
 
 import Dashboard from "../pages/protected/Dashboard.vue";
-import Trackers from "@/pages/protected/Trackers.vue";
-import Settings from "@/pages/protected/Settings.vue";
+import TrackersEnergies from '@/pages/protected/TrackersEnergies.vue';
+import TrackersTrips from '@/pages/protected/TrackersTrips.vue';
+import TrackersAliments from '../pages/protected/TrackersAliments.vue';
 
 import store from "@/store";
 
@@ -28,26 +28,14 @@ export const router = createRouter({
       ],
     },
     {
-      path: "/dashboard",
-      component: DashboardLayout,
-      meta: { requiresAuth: true },
-      children: [
-        { path: "", component: Dashboard, name: "dashboard" },
-        { path: "trackers", component: Trackers, name: "trackers" },
-        { path: "settings", component: Settings, name: "settings" },
-      ],
-    },
-  ],
-});
-
-router.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth) {
-    if (store.getters.isAuthenticated) {
-      next();
-    } else next("/login");
-  } else if (to.name === "login" || to.name === "register") {
-    if (store.getters.isAuthenticated) {
-      next("/dashboard");
-    } else next();
-  } else next();
-});
+      path : '/dashboard',
+      component : DashboardLayout,
+      children : [
+        {path : '' , component : Dashboard , name : 'dashboard'},
+        {path : 'aliment' , component : TrackersAliments , name : 'aliment'},
+        {path : 'energies' , component : TrackersEnergies , name : 'energies'},
+        {path : 'trips' , component : TrackersTrips , name : 'trips'}
+      ]
+    }
+  ]
+})
