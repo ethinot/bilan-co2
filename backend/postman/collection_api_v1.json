@@ -1,0 +1,1046 @@
+{
+	"info": {
+		"_postman_id": "1eb64bf7-34b4-46fb-9938-4583b902cea3",
+		"name": "MIF10 - API api/v1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27625092"
+	},
+	"item": [
+		{
+			"name": "user_v1",
+			"item": [
+				{
+					"name": "En tant qu'utilisateur non connecté je souhaite créer un compte",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Vérifier le statut de la réponse",
+									"pm.test(\"Statut de la réponse est 201 OK\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "test_v1@postman.com",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "test_v1",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "test1234?",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{basic_url}}/api/v1/users/",
+							"host": [
+								"{{basic_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "En tant qu'utilisateur non connecté je souhaite me connecter",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Vérifier le statut de la réponse",
+									"pm.test(\"Statut de la réponse est 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Extraire le token de la réponse texte",
+									"var responseText = pm.response.json();",
+									"var authToken = \"Token \" + responseText.auth_token;",
+									"",
+									"// Stocker le token dans une variable de collection",
+									"pm.collectionVariables.set(\"authToken\", authToken);",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "password",
+									"value": "test1234?",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "test_v1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{basic_url}}/api/v1/token/login/",
+							"host": [
+								"{{basic_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"token",
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "En tant qu'utilisateur connecté je souhaite accéder à mes données privées",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Vérifier le statut de la réponse",
+									"pm.test(\"Statut de la réponse est 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{basic_url}}/api/v1/users/me/",
+							"host": [
+								"{{basic_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "En tant qu'utilisateur connecté je souhaite modifier mon username",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Vérifier le statut de la réponse",
+									"pm.test(\"Statut de la réponse est 204 OK\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "new_username",
+									"value": "test_new_v1",
+									"type": "text"
+								},
+								{
+									"key": "re_new_username",
+									"value": "test_new_v1",
+									"type": "text"
+								},
+								{
+									"key": "current_username",
+									"value": "test_v1",
+									"type": "text"
+								},
+								{
+									"key": "current_password",
+									"value": "test1234?",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{basic_url}}/api/v1/users/set_username/",
+							"host": [
+								"{{basic_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"set_username",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "En tant qu'utilisateur connecté je souhaite modifier mon mot de passe",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Vérifier le statut de la réponse",
+									"pm.test(\"Statut de la réponse est 204 OK\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "new_password",
+									"value": "test4321?",
+									"type": "text"
+								},
+								{
+									"key": "re_new_password",
+									"value": "test4321?",
+									"type": "text"
+								},
+								{
+									"key": "current_password",
+									"value": "test1234?",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{basic_url}}/api/v1/users/set_password/",
+							"host": [
+								"{{basic_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"set_password",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "En tant qu'utilisateur connecté je souhaite accéder à mes données privées de nouveau",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Vérifier le statut de la réponse",
+									"pm.test(\"Statut de la réponse est 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{basic_url}}/api/v1/users/me/",
+							"host": [
+								"{{basic_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "En tant qu'utilisateur connecté je souhaite modifier mes données publiques",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Vérifier le statut de la réponse",
+									"pm.test(\"Statut de la réponse est 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "age",
+									"value": "23",
+									"type": "text"
+								},
+								{
+									"key": "localisation",
+									"value": "LYON",
+									"type": "text"
+								},
+								{
+									"key": "profession",
+									"value": "ET",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{basic_url}}/api/v1/user_data/update/me/",
+							"host": [
+								"{{basic_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user_data",
+								"update",
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "En tant qu'utilisateur connecté je souhaite accéder à mes données publiques",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Vérifier le statut de la réponse",
+									"pm.test(\"Statut de la réponse est 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{basic_url}}/api/v1/user_data/me/",
+							"host": [
+								"{{basic_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user_data",
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "En tant qu'utilisateur connecté je souhaite ajouter une consommation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Vérifier le statut de la réponse",
+									"pm.test(\"Statut de la réponse est 201 OK\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"// Parse the response body as JSON",
+									"var responseBody = pm.response.json();",
+									"",
+									"// Extract the first id",
+									"var firstId = responseBody.id;",
+									"",
+									"// Set the first id as a collection variable",
+									"pm.collectionVariables.set(\"firstId\", firstId);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nom_produit",
+									"value": "déplacement en voiture au travail",
+									"type": "text"
+								},
+								{
+									"key": "frequence_utilisation",
+									"value": "JOURNALIER",
+									"type": "text"
+								},
+								{
+									"key": "quantite_co2",
+									"value": "1.249",
+									"type": "text"
+								},
+								{
+									"key": "type_consommation",
+									"value": "TRANSPORT",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{basic_url}}/api/v1/consommations/",
+							"host": [
+								"{{basic_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"consommations",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "En tant qu'utilisateur connecté je souhaite ajouter une autre consommation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Vérifier le statut de la réponse",
+									"pm.test(\"Statut de la réponse est 201 OK\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nom_produit",
+									"value": "courses au supermaché",
+									"type": "text"
+								},
+								{
+									"key": "date_consommation",
+									"value": "2024-03-20",
+									"type": "text"
+								},
+								{
+									"key": "quantite_co2",
+									"value": "0.75",
+									"type": "text"
+								},
+								{
+									"key": "type_consommation",
+									"value": "ALIMENTAIRE",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{basic_url}}/api/v1/consommations/",
+							"host": [
+								"{{basic_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"consommations",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "En tant qu'utilisateur connecté je souhaite accéder à toutes mes consommations",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Vérifier le statut de la réponse",
+									"pm.test(\"Statut de la réponse est 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{basic_url}}/api/v1/consommations/consult/me/",
+							"host": [
+								"{{basic_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"consommations",
+								"consult",
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "En tant qu'utilisateur connecté je souhaite accéder à une consommation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Vérifier le statut de la réponse",
+									"pm.test(\"Statut de la réponse est 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{basic_url}}/api/v1/consommations/consult/{{firstId}}/",
+							"host": [
+								"{{basic_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"consommations",
+								"consult",
+								"{{firstId}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "En tant qu'utilisateur connecté je souhaite modifier une consommation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Vérifier le statut de la réponse",
+									"pm.test(\"Statut de la réponse est 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nom_produit",
+									"value": "autre_produit_{{firstId}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{basic_url}}/api/v1/consommations/update/me/{{firstId}}/",
+							"host": [
+								"{{basic_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"consommations",
+								"update",
+								"me",
+								"{{firstId}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "En tant qu'utilisateur connecté je souhaite supprimer une consommation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Vérifier le statut de la réponse",
+									"pm.test(\"Statut de la réponse est 204 OK\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nom_produit",
+									"value": "autre_chose",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{basic_url}}/api/v1/consommations/delete/me/{{firstId}}/",
+							"host": [
+								"{{basic_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"consommations",
+								"delete",
+								"me",
+								"{{firstId}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "En tant qu'utilisateur connecté je souhaite me déconnecter",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Vérifier le statut de la réponse",
+									"pm.test(\"Statut de la réponse est 204 OK\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{basic_url}}/api/v1/token/logout/",
+							"host": [
+								"{{basic_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"token",
+								"logout",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "En tant qu'utilisateur non connecté je souhaite me connecter avec mes nouvelles données",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Vérifier le statut de la réponse",
+									"pm.test(\"Statut de la réponse est 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Extraire le token de la réponse texte",
+									"var responseText = pm.response.json();",
+									"var authToken = \"Token \" + responseText.auth_token;",
+									"",
+									"// Stocker le token dans une variable de collection",
+									"pm.collectionVariables.set(\"authToken\", authToken);",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "password",
+									"value": "test4321?",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "test_new_v1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{basic_url}}/api/v1/token/login/",
+							"host": [
+								"{{basic_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"token",
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "En tant qu'utilisateur connecté je souhaite supprimer mon compte",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Vérifier le statut de la réponse",
+									"pm.test(\"Statut de la réponse est 204 OK\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "current_password",
+									"value": "test4321?",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{basic_url}}/api/v1/users/me/",
+							"host": [
+								"{{basic_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"me",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "inherit"
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "basic_url",
+			"value": "http://127.0.0.1:8000",
+			"type": "string"
+		},
+		{
+			"key": "authToken",
+			"value": ""
+		},
+		{
+			"key": "firstId",
+			"value": ""
+		}
+	]
+}

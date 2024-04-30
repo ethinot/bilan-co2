@@ -9,6 +9,7 @@ import {
   CardFooter,
   CardContent,
 } from "@/components/ui/card/index";
+import { router } from "@/router/index";
 </script>
 
 <template>
@@ -17,20 +18,16 @@ import {
       <CardTitle>Welcome !</CardTitle>
     </CardHeader>
     <CardContent>
-      <Form
-        action=""
-        @submit.prevent="submitLogin"
-        :validation-schema="SignupSchema"
-      >
+      <Form action="" @submit="submitLogin" :validation-schema="SignupSchema">
         <div class="w-full my-8">
-          <label for="email" class="block">Full name</label>
+          <label for="email" class="block">User name</label>
           <Field
-            id="fullName"
-            name="fullName"
+            id="username"
+            name="username"
             type="text"
             class="w-full rounded-sm p-2 outline-none border focus-visible:border-[#03C988]"
           />
-          <ErrorMessage name="fullName" class="text-red-500" />
+          <ErrorMessage name="username" class="text-red-500" />
         </div>
         <div class="w-full my-8">
           <label for="email" class="block">Email</label>
@@ -52,20 +49,18 @@ import {
           />
           <ErrorMessage name="password" class="text-red-500" />
         </div>
-        <div class="w-full my-8">
-          <label for="password" class="block">Confirm password</label>
-          <Field
-            id="confirmedPassword"
-            name="confirmedPassword"
-            type="password"
-            class="w-full rounded-sm p-2 outline-none border focus-visible:border-[#03C988]"
-          />
-          <ErrorMessage name="confirmedPassword" class="text-red-500" />
-        </div>
-        <Button class="w-full font-semibold"> Register </Button>
+        <Button class="w-full font-semibold" :disabled="isSending">
+          Register
+        </Button>
       </Form>
     </CardContent>
-    <CardFooter class="w-fit m-auto">
+    <CardFooter class="w-fit m-auto flex flex-col items-center">
+      <p v-if="error" class="text-red-500 font-semibold">
+        Something went wrong try again later !
+      </p>
+      <p v-if="success" class="text-green-500 font-semibold">
+        User created successfully !
+      </p>
       <RouterLink class="underline" to="/login"
         >Already have an account ?</RouterLink
       >
@@ -74,19 +69,36 @@ import {
 </template>
 
 <script>
+import { createUser } from "@/api/auth";
+
 export default {
   data() {
     return {
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-      confirmedPassword: "",
+      isSending: false,
+      error: false,
+      success: false,
     };
   },
   methods: {
-    submitLogin() {
-      console.log(this.email, this.password);
+    async submitLogin(values) {
+      try {
+        this.isSending = true;
+        this.error = false;
+        const response = await createUser(values);
+
+        if (response.status === 201) {
+          this.success = true;
+          setTimeout(() => {
+            router.push({ name: "login" });
+          }, 2000);
+        } else {
+          this.error = true;
+          this.isSending = false;
+        }
+      } catch (error) {
+        this.error = true;
+        this.isSending = false;
+      }
     },
   },
 };

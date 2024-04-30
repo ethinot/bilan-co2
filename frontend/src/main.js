@@ -4,6 +4,8 @@ import App from './App.vue';
 import { router } from './router/index'
 import PrimeVue from 'primevue/config';
 
+import store from './store';
+
 
 
 
@@ -17,5 +19,6 @@ app.use(PrimeVue ,{
     unstyled: true
 });
 
+app.use(store);
 
 app.mount('#app')

@@ -1,20 +1,13 @@
-image: node:latest
-
-cache:
-  paths:
-    - node_modules/
-
 stages:
+  - build
+  - test
   - deploy
+  - sonarqube-check
+  - sonarqube-vulnerability-report
 
-deploy:
-  stage: deploy
-  only:
-    - vuejs-local-setup
-  before_script:
-    - chmod 700 $CI_SSH_KEY
-  script:
-    - cd frontend
-    - npm install 
-    - npm run build
-    - scp -r -o StrictHostKeyChecking=no -i $CI_SSH_KEY dist/* gitlabci@192.168.75.83:/var/www/dist/
+include:
+  - local: '.gitlab-ci/backend-ci.yml'
+  - local: '.gitlab-ci/frontend-ci.yml'
+  - local: '.gitlab-ci/sonarqube-ci.yml'
+
+

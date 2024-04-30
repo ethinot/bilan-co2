@@ -1,0 +1,65 @@
+default:
+  image: python:3.12
+  #
+  # Pick zero or more services to be used on all builds.
+  # Only needed when using a docker container to run your tests in.
+  # Check out: https://docs.gitlab.com/ee/ci/services/index.html
+  services:
+    - postgres:16.2
+  #
+  # This folder is cached between builds
+  # http://docs.gitlab.com/ee/ci/yaml/README.html#cache
+  cache:
+    paths:
+      - ~/.cache/pip/
+  before_script:
+    - apt -y update
+    - apt -y install apt-utils
+    - apt -y upgrade
+    - apt -y install openssh-client
+    - chmod 600 $CI_SSH_KEY
+    - pip3 install -r requirements.txt
+
+migrations:
+  stage: build
+  only:
+    changes:
+      - "backend/**/*"
+    refs:
+      - main
+  script:
+    - echo "DATABASE_USERNAME=$ENV_DATABASE_USERNAME" >> .env
+    - echo "DATABASE_USERPASSWORD=$ENV_DATABASE_USERPASSWORD" >> .env
+    - echo "SECRET_KEY=$ENV_SECRET_KEY" >> .env
+    - cd ./backend
+    - python3 manage.py makemigrations 
+    - python3 manage.py makemigrations django_app
+    - python3 manage.py migrate
+    - python3 manage.py check
+
+django-tests:
+  stage: test
+  only:
+    changes:
+      - "backend/**/*"
+    refs:
+      - main
+  script:
+    - echo "DATABASE_USERNAME=$ENV_DATABASE_USERNAME" >> .env
+    - echo "DATABASE_USERPASSWORD=$ENV_DATABASE_USERPASSWORD" >> .env
+    - echo "SECRET_KEY=$ENV_SECRET_KEY" >> .env
+    - cd ./backend
+    - python3 manage.py makemigrations 
+    - python3 manage.py test
+
+deploy:
+  stage: deploy
+  only:
+    changes:
+      - "backend/**/*"
+    refs:
+      - main
+  script:
+    - scp -o StrictHostKeyChecking=no -i $CI_SSH_KEY -r ./$APP_NAME gitlabci@192.168.75.83:/home/gitlabci
+    - ssh -o StrictHostKeyChecking=no -i $CI_SSH_KEY -A gitlabci@192.168.75.83 'sudo systemctl restart gunicorn'
+  environment: production
