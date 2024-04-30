@@ -43,6 +43,18 @@ class ConsommationModelTestCase(TestCase):
         self.assertEqual(self.consommation.quantite_co2, 10.0)
         self.assertEqual(self.consommation.type_consommation, 'FOSSILE')
 
+        self.consommation.clean()
+        
+        self.consommation = Consommation.objects.create(user=self.user, nom_produit='Test Product', quantite_co2=10.0, type_consommation='FOSSILE')
+
+        with self.assertRaises(ValidationError):
+            self.consommation.clean()
+        
+        with self.assertRaises(ValidationError):
+            self.consommation.date_consommation="LUNDI"
+            self.consommation.frequence_utilisation='JOURNALIER'
+            self.consommation.clean()
+
 class TransportTestCase(TestCase):
     def setUp(self) -> None:
         self.test = BD("transport.csv")
@@ -52,6 +64,8 @@ class TransportTestCase(TestCase):
     def test_calcul_gestion_erreur(self):
         with self.assertRaises(ValueError):
             self.test.calcul("fusée",300000)
+    def test_recherche(self):
+        self.assertEqual(self.test.recherche("téléporteur"),[])
 
 class EnergieTestCase(TestCase):
     def setUp(self) -> None:
@@ -79,5 +93,16 @@ class AlimentationTestCase(TestCase):
         self.test.select_categorie("boissons")
         self.test.select_sous_categorie("eaux")
         self.assertEqual(calcul_sans_selection,self.test.calcul(produit,quantite))
+    def test_categorie_erreur(self):
+        with self.assertRaises(ValueError):
+            self.test.select_categorie("catégorie qui n'existe pas")
+        self.test.select_categorie("boissons")
+        with self.assertRaises(ValueError):
+            self.test.select_sous_categorie("nectar de l'olympe")
+    def test_recherche(self):
+        self.assertEqual(self.test.recherche("jus de chaussette"),[])
+    def test_list_categorie(self):
+        d = self.test.list_categorie()
+        self.assertTrue(all(len(i)!=0 for i in d.values()))
 
  
