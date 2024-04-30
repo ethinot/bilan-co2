@@ -1,0 +1,7 @@
+[run]
+source = django_app,backend
+omit =
+    */migrations/*
+    */asgi.py
+    */wsgi.py
+    */views.py

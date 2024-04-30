@@ -40,8 +40,6 @@ migrations:
 django-tests:
   stage: test
   only:
-    changes:
-      - "backend/**/*"
     refs:
       - main
   script:
@@ -49,8 +47,12 @@ django-tests:
     - echo "DATABASE_USERPASSWORD=$ENV_DATABASE_USERPASSWORD" >> .env
     - echo "SECRET_KEY=$ENV_SECRET_KEY" >> .env
     - cd ./backend
-    - python3 manage.py makemigrations 
-    - python3 manage.py test
+    - python3 manage.py makemigrations
+    - coverage run manage.py test
+    - coverage xml -o coverage.xml
+  artifacts: 
+    paths:
+      - backend/coverage.xml 
 
 deploy:
   stage: deploy
