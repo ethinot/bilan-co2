@@ -23,6 +23,7 @@ sonarqube-check:
     - merge_requests
     - main
     - develop
+    - sonarqube-coverage
 
 sonarqube-vulnerability-report:
   stage: sonarqube-vulnerability-report
@@ -37,6 +38,7 @@ sonarqube-vulnerability-report:
     - merge_requests
     - main
     - develop
+    - sonarqube-coverage
   artifacts:
     expire_in: 1 day
     reports:
