@@ -35,6 +35,9 @@ const store = new createStore({
     },
     async logout({ commit }) {
       try {
+        // Temporary fix for logout problem :
+        commit("removeToken");
+        return;
         const response = await logout();
         if (response.status === 200) {
           commit("removeToken");

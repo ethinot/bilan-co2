@@ -10,6 +10,7 @@ import Register from "../pages/public/Register.vue";
 
 import Dashboard from "../pages/protected/Dashboard.vue";
 import Trackers from "@/pages/protected/Trackers.vue";
+import Settings from "@/pages/protected/Settings.vue";
 
 import store from "@/store";
 
@@ -33,6 +34,7 @@ export const router = createRouter({
       children: [
         { path: "", component: Dashboard, name: "dashboard" },
         { path: "trackers", component: Trackers, name: "trackers" },
+        { path: "settings", component: Settings, name: "settings" },
       ],
     },
   ],

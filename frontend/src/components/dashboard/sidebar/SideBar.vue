@@ -29,7 +29,7 @@ import LogoutButton from "./LogoutButton.vue";
         <li class="">
           <SideBarLink
             label="Settings"
-            to="/dashboard"
+            to="/dashboard/settings"
             :imageSource="SettingsIcon"
           />
         </li>
