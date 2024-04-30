@@ -1,5 +1,4 @@
 import { createWebHistory, createRouter } from 'vue-router'
-
 import Layout from "../layouts/Layout.vue";
 import DashboardLayout from "../layouts/DashboardLayout.vue";
 
@@ -13,9 +12,9 @@ import Register from '../pages/public/Register.vue';
 
 
 import Dashboard from "../pages/protected/Dashboard.vue";
-import Trackers from '@/pages/protected/Trackers.vue';
 import TrackersEnergies from '@/pages/protected/TrackersEnergies.vue';
 import TrackersTrips from '@/pages/protected/TrackersTrips.vue';
+import TrackersAliments from '../pages/protected/TrackersAliments.vue';
 
 
 export const router = createRouter({
@@ -36,7 +35,7 @@ export const router = createRouter({
       component : DashboardLayout,
       children : [
         {path : '' , component : Dashboard , name : 'dashboard'},
-        {path : 'aliment' , component : Trackers , name : 'aliment'},
+        {path : 'aliment' , component : TrackersAliments , name : 'aliment'},
         {path : 'energies' , component : TrackersEnergies , name : 'energies'},
         {path : 'trips' , component : TrackersTrips , name : 'trips'}
       ]
