@@ -50,7 +50,11 @@ class Alimentation(BD):
             self.filtre = pd.DataFrame(l)
         return list(self.filtre.iloc[:,2])
     def calcul(self,choix:str,quantite:float)->float:
-        for i in range(len(self.filtre)-1):
-            if pre_traitement(self.filtre.iloc[i].iloc[2]) == pre_traitement(choix):
-
-                return float(self.filtre.iloc[i].iloc[3])*quantite
+        if self.filtre == []:
+            f = self.df
+        else:
+            f = self.filtre
+        for i in range(len(f)-1):
+            if pre_traitement(f.iloc[i].iloc[2]) == pre_traitement(choix):
+                return float(f.iloc[i].iloc[3])*quantite
+        raise ValueError("produit non valide")
