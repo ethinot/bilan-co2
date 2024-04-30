@@ -126,6 +126,9 @@ export default {
       this.$refs.age.value = user.age;
       this.$refs.select.value = user.profession;
       this.$refs.localisation.value = user.localisation;
+      this.$refs.age.touched = false;
+      this.$refs.select.touched = false;
+      this.$refs.localisation.touched = false;
       console.log(this.user);
     },
     async fetchCurrentInfo() {
