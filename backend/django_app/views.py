@@ -4,6 +4,11 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from .serializers import *
 from .models import *
+import pandas as pd
+
+transport_bd = BD("transport.csv")
+alimentation_bd = Alimentation("alimentation.csv")
+energie_bd = BD("energie.csv")
 
 @permission_classes([IsAuthenticated])
 @api_view(['GET'])
@@ -51,29 +56,6 @@ def update_user_data(request):
         except User_data.DoesNotExist:
             return Response({'message': 'Utilisateur non trouvé'}, status=404)
             
-    return Response({'message': 'Méthode non autorisée'}, status=405)
-
-# TODO : supprimer cette fonction car elle ne sert plus à rien car si User supprimé User_data le sera également
-@permission_classes([IsAuthenticated])
-@api_view(['DELETE'])
-def delete_user_data(request):
-    """
-    View to delete user data.
-
-    Parameters:
-        request (HttpRequest): The HTTP request object.
-
-    Returns:
-        Response: HTTP response indicating success or failure of the delete operation.
-    """
-    if request.method == 'DELETE':
-        try:
-            utilisateur = User_data.objects.get(user=request.user)
-            utilisateur.delete()
-            return Response(status=204)
-        except User_data.DoesNotExist:
-            return Response({'message': 'Utilisateur non trouvé'}, status=404)
-
     return Response({'message': 'Méthode non autorisée'}, status=405)
 
 @permission_classes([IsAuthenticated])
@@ -196,3 +178,82 @@ def delete_consommation(request, consommation_id):
 
     consommation.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
+
+@permission_classes([IsAuthenticated])
+@api_view(['GET'])
+def calculateur_de_conso(request, type_calcul: str, choix: str, quantite: float):
+    """
+    Calculate consumption based on type, choice, and quantity.
+
+    Args:
+        request: The request object.
+        type_calcul (str): The type of calculation.
+        choix (str): The specified choice.
+        quantite (float): The specified quantity.
+
+    Returns:
+        Response: The result of the calculation.
+
+    Raises:
+        HTTP_400_BAD_REQUEST: If the request data is invalid.
+        HTTP_500_INTERNAL_SERVER_ERROR: If an error occurs during calculation.
+    """
+    try:
+        if type_calcul == 'transport':
+            resultat = transport_bd.calcul(choix, quantite)
+        elif type_calcul == 'alimentation':
+            resultat = alimentation_bd.calcul(choix, quantite)
+        elif type_calcul == 'energie':
+            resultat = energie_bd.calcul(choix, quantite)
+        else:
+            return Response({'error': 'Type de calcul non pris en charge.'}, status=400)
+        
+        return Response({'resultat': resultat})
+    except Exception as e:
+        return Response({'error': str(e)}, status=500)
+
+@permission_classes([IsAuthenticated])
+@api_view(['GET'])
+def recherche_de_conso(request, categorie=None, sous_categorie=None, terme_recherche=None):
+    """
+    Search for consumption data.
+
+    Args:
+        request: The request object.
+        categorie (str): The specified category.
+        sous_categorie (str): The specified subcategory.
+        terme_recherche (str): The specified search term.
+
+    Returns:
+        Response: The consumption data corresponding to the search parameters.
+
+    Raises:
+        HTTP_400_BAD_REQUEST: If the request data is invalid.
+        HTTP_500_INTERNAL_SERVER_ERROR: If an error occurs during search.
+    """
+    try:
+        if request.method == 'GET':
+            if categorie == 'transport':
+                if terme_recherche is None:
+                    resultat = transport_bd.list_value()
+                else:
+                    resultat = transport_bd.recherche(terme_recherche)
+            elif categorie == 'alimentation':
+                if terme_recherche is None:
+                    if sous_categorie is None:
+                        resultat = alimentation_bd.list_value()
+                    else:
+                        resultat = alimentation_bd.select_sous_categorie(sous_categorie)
+                else:
+                    resultat = alimentation_bd.recherche(terme_recherche)
+            elif categorie == 'energie':
+                if terme_recherche is None:
+                    resultat = energie_bd.list_value()
+                else:
+                    resultat = energie_bd.recherche(terme_recherche)
+            else:
+                return Response({'error': 'Type de recherche non pris en charge.'}, status=400)
+            
+            return Response(resultat)
+    except Exception as e:
+        return Response({'error': str(e)}, status=500)
