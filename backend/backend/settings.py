@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/  
 """
- 
+
 from pathlib import Path
 import os
 
@@ -40,17 +40,17 @@ ALLOWED_HOSTS = ["localhost", "*"]
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'rest_framework',
-    'rest_framework.authtoken',
-    'corsheaders',
-    'djoser',
-    'django_app', # APP name
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "rest_framework",
+    "rest_framework.authtoken",
+    "corsheaders",
+    "djoser",
+    "django_app",  # APP name
 ]
 
 CORS_ALLOWED_ORIGINS = [
@@ -99,7 +99,7 @@ DATABASES = {
         "NAME": "emissiontracker",
         "USER": os.environ.get("DATABASE_USERNAME"),
         "PASSWORD": os.environ.get("DATABASE_USERPASSWORD"),
-        "HOST": "127.0.0.1",
+        "HOST": "192.168.75.83",
         "PORT": "",
     }
 }
