@@ -143,3 +143,5 @@ GitHub.sublime-settings
 !.vscode/extensions.json 
 .history
 emissionTracker/lib/python3.12/site-packages/django/conf/locale/ga/__pycache__/formats.cpython-312.pyc
+
+backend/db.sqlite3
