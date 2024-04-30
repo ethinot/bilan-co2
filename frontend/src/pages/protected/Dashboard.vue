@@ -10,7 +10,7 @@ import BarChart from "@/components/dashboard/BarChart.vue";
 </script>
 
 <template>
-  <div class="p-2">
+  <div class="p-2 overflow-y-scroll">
     <div class="flex h-fit items-center justify-center">
       <CarbonDisplayer :value="120" />
     </div>

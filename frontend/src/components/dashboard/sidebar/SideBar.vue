@@ -3,7 +3,7 @@ import SideBarLink from "./SideBarLink.vue";
 import HomeIcon from "@/assets/home.png";
 import SettingsIcon from "@/assets/settings.png";
 import TrackIcon from "@/assets/track.png";
-import LogoutIcon from "@/assets/logout.png";
+import LogoutButton from "./LogoutButton.vue";
 </script>
 <template>
   <nav class="p-2">
@@ -72,13 +72,13 @@ import LogoutIcon from "@/assets/logout.png";
         <li class="">
           <SideBarLink
             label="Settings"
-            to="/dashboard"
+            to="/dashboard/settings"
             :imageSource="SettingsIcon"
           />
         </li>
       </div>
-      <div class="">
-        <SideBarLink label="Logout" to="/dashboard" :imageSource="LogoutIcon" />
+      <div>
+        <LogoutButton />
       </div>
     </ul>
   </nav>

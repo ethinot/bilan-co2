@@ -1,0 +1,18 @@
+Énergie,émission de C02 en kgC02/kWh 
+Électricité(centrale nucléaire),0.006
+Électricité(centrale hydrolique),0.006
+Électricité(éolien terrestre),0.0141
+Électricité(éolien en mer),0.0156
+Bioéthanol,0.144
+Biométhane,0.0163
+Bois granulé,0.027
+Bois bûches,0.032
+Électricité (photovoltaïque),0.0439
+Électricité (géothermie),0.045
+Gaz naturel,0.243
+Propane,0.27
+Butane,0.273
+Fioul domestique,0.314
+Électricité(centrale gaz),0.418
+Électricité(centrale fioul),0.73
+Électricité(centrake charbon),1.06

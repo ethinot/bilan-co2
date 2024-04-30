@@ -1,8 +1,25 @@
 from rest_framework import routers, serializers, viewsets
-from .models import User_data
+from .models import *
 
-class User_Data_Serializer(serializers.ModelSerializer):
+class UserDataSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User_data
         fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.context['request'].method == 'PATCH':
+            for field_name, field in self.fields.items():
+                field.required = False
+
+class ConsommationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Consommation
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.context['request'].method == 'PATCH':
+            for field_name, field in self.fields.items():
+                field.required = False
