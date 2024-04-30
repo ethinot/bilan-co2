@@ -182,6 +182,22 @@ def delete_consommation(request, consommation_id):
 @permission_classes([IsAuthenticated])
 @api_view(['GET'])
 def calculateur_de_conso(request, type_calcul: str, choix: str, quantite: float):
+    """
+    Calculate consumption based on type, choice, and quantity.
+
+    Args:
+        request: The request object.
+        type_calcul (str): The type of calculation.
+        choix (str): The specified choice.
+        quantite (float): The specified quantity.
+
+    Returns:
+        Response: The result of the calculation.
+
+    Raises:
+        HTTP_400_BAD_REQUEST: If the request data is invalid.
+        HTTP_500_INTERNAL_SERVER_ERROR: If an error occurs during calculation.
+    """
     try:
         if type_calcul == 'transport':
             resultat = transport_bd.calcul(choix, quantite)
@@ -199,6 +215,22 @@ def calculateur_de_conso(request, type_calcul: str, choix: str, quantite: float)
 @permission_classes([IsAuthenticated])
 @api_view(['GET'])
 def recherche_de_conso(request, categorie=None, sous_categorie=None, terme_recherche=None):
+    """
+    Search for consumption data.
+
+    Args:
+        request: The request object.
+        categorie (str): The specified category.
+        sous_categorie (str): The specified subcategory.
+        terme_recherche (str): The specified search term.
+
+    Returns:
+        Response: The consumption data corresponding to the search parameters.
+
+    Raises:
+        HTTP_400_BAD_REQUEST: If the request data is invalid.
+        HTTP_500_INTERNAL_SERVER_ERROR: If an error occurs during search.
+    """
     try:
         if request.method == 'GET':
             if categorie == 'transport':
