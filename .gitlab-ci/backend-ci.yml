@@ -43,7 +43,6 @@ django-tests:
     refs:
       - main
       - merge_requests
-      - sonarqube-coverage
   script:
     - echo "DATABASE_USERNAME=$ENV_DATABASE_USERNAME" >> .env
     - echo "DATABASE_USERPASSWORD=$ENV_DATABASE_USERPASSWORD" >> .env
