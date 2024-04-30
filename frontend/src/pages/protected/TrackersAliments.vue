@@ -29,7 +29,6 @@ import Save from '@/components/save/Save.vue';
             <p class="mt-1 text-gray-600"></p><b/>
           </div>
         </div>
-        {{ multiValues }}
       </div>
       <Save/>
     </div>
