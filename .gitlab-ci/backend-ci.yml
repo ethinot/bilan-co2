@@ -51,7 +51,10 @@ django-tests:
     - python3 manage.py makemigrations
     #- python3 manage.py test
     - coverage run manage.py test
-    - coverage xml -o coverage.xml
+    - coverage xml -o ../coverage.xml
+  artifacts: 
+    paths:
+      - ../coverage.xml
 
 deploy:
   stage: deploy
