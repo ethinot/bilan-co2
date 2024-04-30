@@ -31,3 +31,10 @@ class AlimentationTestCase(TestCase):
     def test_calcul_gestion_erreur(self):
         with self.assertRaises(ValueError):
             self.test.calcul("Gloubi-boulga",1000000)
+    def test_categorie(self):
+        quantite = 10
+        produit = "Eau minérale Rozana, embouteillée, gazeuse, fortement minéralisée (Beauregard, 63)"
+        calcul_sans_selection =self.test.calcul(produit, quantite)
+        self.test.select_categorie("boissons")
+        self.test.select_sous_categorie("eaux")
+        self.assertEqual(calcul_sans_selection,self.test.calcul(produit,quantite))
