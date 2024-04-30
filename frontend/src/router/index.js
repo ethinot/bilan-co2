@@ -45,3 +45,15 @@ export const router = createRouter({
     },
   ],
 });
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth) {
+    if (store.getters.isAuthenticated) {
+      next();
+    } else next("/login");
+  } else if (to.name === "login" || to.name === "register") {
+    if (store.getters.isAuthenticated) {
+      next("/dashboard");
+    } else next();
+  } else next();
+});
