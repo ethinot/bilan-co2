@@ -22,7 +22,7 @@ class UserDataTestCase(TestCase):
         user_data.localisation = 'Paris'
         user_data.profession = 'ET'
         user_data.save()
-
+ 
         # Now retrieve the object again from the database to ensure changes are saved
         updated_user_data = User_data.objects.get(user=self.user)
         
