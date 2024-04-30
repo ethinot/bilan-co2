@@ -38,26 +38,19 @@ import Save from '@/components/save/Save.vue';
 </template>
 <script>
 import VueMultiselect from 'vue-multiselect'
+import { fetchTrackersAliment } from '@/api/trackers';
 
 
 export default {
   data() {
     return {
       multiValues: {},
-      categories: {
-                    "aides culinaires et ingrédients divers": ["aides culinaires", "sauces", "sels", "condiments", "denrées destinées à une alimentation particulière", "herbes", "algues", "ingrédients divers", "épices"],
-                    "aliments infantiles": ["desserts infantiles", "petits pots salés et plats infantiles", "céréales et biscuits infantiles", "laits et boissons infantiles"],
-                    "boissons": ["boissons sans alcool", "boisson alcoolisées", "eaux"],
-                    "entrées et plats composés": ["feuilletées et autres entrées", "sandwichs", "pizzas, tartes et crêpes salées", "soupes", "salades composées et crudités", "plats composés", "plats végétariens"],
-                    "fruits, légumes, légumineuses et oléagineux": ["fruits à coque et graines oléagineuses", "légumes", "pommes de terre et autres tubercules", "légumineuses", "fruits"],
-                    "glaces et sorbets": ["sorbets", "glaces", "desserts glacés"],
-                    "lait et produits laitiers": ["crèmes et spécialités à base de crème", "fromages", "laits", "produits laitiers frais et assimilés"],
-                    "matières grasses": ["autres matières grasses", "margarines", "huiles de poissons", "beurres", "huiles et graisses végétales"],
-                    "produits céréaliers": ["gâteaux et pâtisseries", "céréales de petit-déjeuner et biscuits", "pâtes, riz et céréales", "pains et viennoiseries", "farines et pâtes à tarte"],
-                    "produits sucrés": ["sucres, miels et assimilés", "confitures et assimilés", "chocolats et produits à base de chocolat", "confiseries non chocolatées"],
-                    "viandes, œufs, poissons": ["poissons cuits", "autres produits à base de viande", "substituts de charcuterie", "viandes cuites", "substituts de viande", "charcuteries", "mollusques et crustacés cuits", "œufs", "viandes crues", "poissons crus", "produits à base de poissons et produits de la mer", "mollusques et crustacés crus"]
-                }
+      categories: {}
     }
+  },
+  async mounted() {
+    const reponse = await fetchTrackersAliment();
+    this.categories= reponse;
   },
 }
 
