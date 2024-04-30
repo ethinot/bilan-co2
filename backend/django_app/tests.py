@@ -2,6 +2,7 @@ from django.test import TestCase
 from .models import User_data, Consommation, BD, Alimentation
 from django.contrib.auth.models import User
 from datetime import date
+from .views import *
 
 class UserTestCase(TestCase):
 
@@ -10,18 +11,20 @@ class UserTestCase(TestCase):
         self.assertEqual(user.username, 'test_user')
 
 class UserDataTestCase(TestCase):
+    def setUp(self) -> None:
+        self.user = User.objects.create_user(username='test_user', password='test_password')
 
     def test_user_data_creation(self):
-        user = User.objects.create_user(username='test_user', password='test_password')
-        user_data = User_data.objects.get(user=user)
+        user_data = User_data.objects.get(user=self.user)
         self.assertEqual(user_data.user.username, 'test_user')
+        self.assertEqual(str(user_data),'test_user')
         user_data.age = 25
         user_data.localisation = 'Paris'
         user_data.profession = 'ET'
         user_data.save()
 
         # Now retrieve the object again from the database to ensure changes are saved
-        updated_user_data = User_data.objects.get(user=user)
+        updated_user_data = User_data.objects.get(user=self.user)
         
         self.assertEqual(updated_user_data.age, 25)
         self.assertEqual(updated_user_data.localisation, 'Paris')
@@ -35,6 +38,7 @@ class ConsommationModelTestCase(TestCase):
     def test_consommation_creation(self):
         self.assertEqual(self.consommation.user.username, 'test_user')
         self.assertEqual(self.consommation.nom_produit, 'Test Product')
+        self.assertEqual(str(self.consommation),'Test Product')
         self.assertEqual(self.consommation.frequence_utilisation, 'JOURNALIER')
         self.assertEqual(self.consommation.quantite_co2, 10.0)
         self.assertEqual(self.consommation.type_consommation, 'FOSSILE')
