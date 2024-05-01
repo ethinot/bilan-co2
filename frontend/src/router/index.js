@@ -1,4 +1,5 @@
 import { createWebHistory, createRouter } from "vue-router";
+import store from "@/store";
 import Layout from "../layouts/Layout.vue";
 import DashboardLayout from "../layouts/DashboardLayout.vue";
 
@@ -13,6 +14,7 @@ import TrackersTrips from "@/pages/protected/TrackersTrips.vue";
 import TrackersAliments from "../pages/protected/TrackersAliments.vue";
 import Consommations from "@/pages/protected/Consommations.vue";
 import Settings from "@/pages/protected/Settings.vue";
+import Trackers from "@/pages/protected/Trackers.vue";
 
 export const router = createRouter({
   history: createWebHistory(),
@@ -30,6 +32,7 @@ export const router = createRouter({
     {
       path: "/dashboard",
       component: DashboardLayout,
+      meta: { requiresAuth: true },
       children: [
         { path: "", component: Dashboard, name: "dashboard" },
         { path: "settings", component: Settings, name: "settings" },
@@ -40,6 +43,11 @@ export const router = createRouter({
           path: "consommations",
           component: Consommations,
           name: "consommations",
+        },
+        {
+          path: "trackers",
+          component: Trackers,
+          name: "trackers",
         },
       ],
     },

@@ -55,23 +55,6 @@ export default {
         isSending: false,
         error: false,
       },
-      fakeData: [
-        {
-          id: 1,
-          type: "Aliment",
-          emission: 2,
-        },
-        {
-          id: 2,
-          type: "Transport",
-          emission: 50,
-        },
-        {
-          id: 3,
-          type: "Energie",
-          emission: 70,
-        },
-      ],
     };
   },
   methods: {
@@ -79,9 +62,16 @@ export default {
       try {
         this.request.isSending = true;
         this.request.error = false;
-        // const response = await fetchConsommations();
-        // this.consommations = response.data;
-        this.consommations = this.fakeData;
+        const response = await fetchConsommations();
+        console.log(response);
+        this.consommations = response.data.map((consommation) => {
+          return {
+            id: consommation.id,
+            name: consommation.nom_produit,
+            emission: consommation.quantite_co2,
+            type: consommation.type_consommation,
+          };
+        });
         this.request.isSending = false;
       } catch (error) {
         this.request.isSending = false;

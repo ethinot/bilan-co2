@@ -36,6 +36,7 @@ import TableItem from "./TableItem.vue";
           :id="consommation.id"
           :type="consommation.type"
           :emission="consommation.emission"
+          :name="consommation.name"
         />
       </tbody>
     </table>

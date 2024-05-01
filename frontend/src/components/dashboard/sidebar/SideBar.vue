@@ -21,35 +21,10 @@ import LogoutButton from "./LogoutButton.vue";
         </li>
         <li class="">
           <SideBarLink
-            @click="toogglevisibility"
-            label="Add tracker"
-            to=""
+            label="Add Tracker"
+            to="/dashboard/trackers"
             :imageSource="TrackIcon"
           />
-          <div
-            v-if="isVisible"
-            class="absolute mt-2 w-48 z-20 rounded-md shadow-xl bg-white"
-            v-click-outside="onClickOutside"
-          >
-            <router-link
-              to="/dashboard/aliment"
-              class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-gray-300 hover:text-white"
-            >
-              Aliments
-            </router-link>
-            <router-link
-              to="/dashboard/trips"
-              class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-gray-300 hover:text-white"
-            >
-              Trajet
-            </router-link>
-            <router-link
-              to="/dashboard/energies"
-              class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-gray-300 hover:text-white"
-            >
-              Energies
-            </router-link>
-          </div>
         </li>
         <li class="">
           <SideBarLink

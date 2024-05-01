@@ -4,9 +4,9 @@ import DeleteDialog from "@/components/consommation/DeleteDialog.vue";
 <template>
   <tr class="hover:bg-gray-100">
     <td class="px-6 py-4 whitespace-nowrap">{{ id }}</td>
+    <td class="px-6 py-4 whitespace-nowrap">{{ name }}</td>
     <td class="px-6 py-4 whitespace-nowrap">{{ type }}</td>
-    <td class="px-6 py-4 whitespace-nowrap">TER</td>
-    <td class="px-6 py-4 whitespace-nowrap">{{ emission }} kg</td>
+    <td class="px-6 py-4 whitespace-nowrap">{{ emmisionValue }}</td>
     <td class="px-6 py-4 whitespace-nowrap">
       <button
         class="text-red-600 hover:text-red-800 font-bold"
@@ -61,7 +61,7 @@ export default {
       try {
         this.request.isSending = true;
         this.request.error = false;
-        //const response = await deleteConsommation(this.id);
+        const response = await deleteConsommation(this.id);
         this.removeItem(this.id);
         this.show = false;
       } catch (error) {
@@ -72,7 +72,14 @@ export default {
       }
     },
   },
-  props: ["id", "type", "emission"],
+  props: ["id", "name", "type", "emission"],
   inject: ["removeItem"],
+  computed: {
+    emmisionValue() {
+      if (this.emission > 1000) {
+        return `${(this.emission / 1000).toFixed(2)} Kg`;
+      } else return `${this.emission} g`;
+    },
+  },
 };
 </script>
