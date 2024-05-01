@@ -5,25 +5,27 @@
   >
     <div class="text-center">
       <h2 class="font-semibold">CO2</h2>
-      <p class="text-lg font-bold">{{ value }} kg</p>
-      <p>So far this month</p>
+      <p class="text-lg font-bold">{{ emissionValue }}</p>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  props: {
-    value: {
-      type: Number,
-      required: true,
-    },
-  },
+  props: ["emission"],
   computed: {
     borderColor() {
-      if (this.value < 100) return "border-green-500";
-      else if (this.value < 150) return "border-orange-500";
+      if (this.kgValue < 100) return "border-green-500";
+      else if (this.kgValue < 150) return "border-orange-500";
       else return "border-red-500";
+    },
+    emissionValue() {
+      if (this.emission > 1000) {
+        return `${(this.emission / 1000).toFixed(2)} Kg`;
+      } else return `${this.emission} g`;
+    },
+    kgValue() {
+      return this.emission / 1000;
     },
   },
 };

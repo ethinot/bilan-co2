@@ -26,16 +26,34 @@ ChartJS.register(
 export default {
   name: "BarChart",
   components: { Bar },
+  props: ["data"],
   data() {
     return {
-      chartData: {
-        labels: ["Winter", "Spring", "Summer", "Fall"],
-        datasets: [{ data: [40, 20, 12, 140] }],
-      },
       chartOptions: {
         responsive: true,
+        colors: {
+          enabled: true,
+        },
       },
     };
+  },
+  computed: {
+    chartData() {
+      return {
+        labels: ["Trips", "Energy", "Food"],
+        datasets: [
+          {
+            label: "Emission by Category",
+            data: this.data,
+            backgroundColor: [
+              "rgba(255, 99, 132)",
+              "rgba(255, 159, 64)",
+              "rgba(255, 205, 86)",
+            ],
+          },
+        ],
+      };
+    },
   },
 };
 </script>

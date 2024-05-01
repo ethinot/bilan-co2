@@ -9,7 +9,6 @@ import Footer from "../components/footer/Footer.vue";
     <main class="my-8">
       <router-view></router-view>
     </main>
-    <Footer />
   </div>
 </template>
 
@@ -17,7 +16,6 @@ import Footer from "../components/footer/Footer.vue";
 export default {
   components: {
     NavBar,
-    Footer,
   },
 };
 </script>

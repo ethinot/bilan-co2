@@ -123,10 +123,10 @@ export default {
       }
     },
     setUserData(user) {
-      this.$refs.age.value = user.age;
-      this.$refs.select.value = user.profession;
-      this.$refs.localisation.value = user.localisation;
-      console.log(this.user);
+      console.log(this.$refs.age);
+      if (user.age) this.$refs.age.value = user.age;
+      if (user.profession) this.$refs.select.value = user.profession;
+      if (user.localisation) this.$refs.localisation.value = user.localisation;
     },
     async fetchCurrentInfo() {
       try {
