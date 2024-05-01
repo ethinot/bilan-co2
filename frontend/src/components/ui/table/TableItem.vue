@@ -6,7 +6,7 @@ import DeleteDialog from "@/components/consommation/DeleteDialog.vue";
     <td class="px-6 py-4 whitespace-nowrap">{{ id }}</td>
     <td class="px-6 py-4 whitespace-nowrap">{{ name }}</td>
     <td class="px-6 py-4 whitespace-nowrap">{{ type }}</td>
-    <td class="px-6 py-4 whitespace-nowrap">{{ emmisionValue }}</td>
+    <td class="px-6 py-4 whitespace-nowrap">{{ emissionValue }}</td>
     <td class="px-6 py-4 whitespace-nowrap">
       <button
         class="text-red-600 hover:text-red-800 font-bold"
@@ -75,7 +75,7 @@ export default {
   props: ["id", "name", "type", "emission"],
   inject: ["removeItem"],
   computed: {
-    emmisionValue() {
+    emissionValue() {
       if (this.emission > 1000) {
         return `${(this.emission / 1000).toFixed(2)} Kg`;
       } else return `${this.emission} g`;

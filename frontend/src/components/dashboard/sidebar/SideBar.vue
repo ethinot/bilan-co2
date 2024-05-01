@@ -3,6 +3,7 @@ import SideBarLink from "./SideBarLink.vue";
 import HomeIcon from "@/assets/home.png";
 import SettingsIcon from "@/assets/settings.png";
 import TrackIcon from "@/assets/track.png";
+import CarbonIcon from "@/assets/carbon.png";
 import LogoutButton from "./LogoutButton.vue";
 </script>
 <template>
@@ -28,15 +29,15 @@ import LogoutButton from "./LogoutButton.vue";
         </li>
         <li class="">
           <SideBarLink
-            label="Settings"
-            to="/dashboard/settings"
-            :imageSource="SettingsIcon"
+            label="Consommations"
+            to="/dashboard/consommations"
+            :imageSource="CarbonIcon"
           />
         </li>
         <li class="">
           <SideBarLink
-            label="Consommations"
-            to="/dashboard/consommations"
+            label="Settings"
+            to="/dashboard/settings"
             :imageSource="SettingsIcon"
           />
         </li>
