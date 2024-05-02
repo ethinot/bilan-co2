@@ -3,7 +3,9 @@
 
 ## 🧐 À propos
 
-**TODO**
+Ce projet est proposé aux étudiant(e)s du Master 1 Informatique de l'Université Claude Bernard Lyon 1. À travers l'unité d'enseignement "Projet transversal" (M1if10)ce projet vise à développer les capacités de travail collaboratives, tout en mettant en pratique les connaissances acquises dans les autres UE du M1. 
+
+Le sujet commun aux élèves de la promotion était de réaliser une application web proposant un service de calcul d'empreinte carbone.
 
 ## 🏁 C'est partie
 
@@ -11,7 +13,10 @@ Les instructions qui suivent vont vous permettrent des lancer le projet en local
 
 ### Prérequis
 
-- **TODO : tuto création du env python**
+- **Backend** : Python supérieure ou égale à 3.10
+  - Créer un envirronnement virtuel Python (pas obligatoire mais plus propre)
+    - `python3 -m venv chemin/vers/l/envirronnement`
+  
 
 -  **Frontend** :  Node.js version 18+. 20+
 
@@ -91,6 +96,8 @@ Les instructions qui suivent vont vous permettrent des lancer le projet en local
 
     - pour le backend :
     `pip install -r requirement.txt `
+      - si vous travaillez dans un environnement Python, penser à l'activer avant d'installer les dépendances : \
+        `source chemin/vers/l/envirronnement/bin/activate`
 
     - pour le frontend :
     `cd frontend && npm install `
@@ -118,7 +125,6 @@ cd frontend && npm run dev
 ### Backend
 
 - [Django](https://www.djangoproject.com/) : framework de création d'application web
-- **TODO**
 
 ### Frontend
 - [Vite](https://vitejs.dev/) : Un outil de développement rapide pour la construction d'applications web modernes, Il se compose de deux parties principales :
