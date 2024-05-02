@@ -108,13 +108,53 @@ Les instructions qui suivent vont vous permettrent des lancer le projet en local
 
 Après l'Installation des dépendances :
 
-- Lancer l'application Django (backend)
+### Backend 
+#### Configuration du fichier `.env`
+
+1. Créez un fichier nommé `.env` dans le répertoire `backend/backend`.
+2. Ajoutez-y les lignes suivantes :
+
+```plaintext
+SECRET_KEY=
+DATABASE_USERNAME=
+DATABASE_PASSWORD=
+```
+
+#### Génération de la clé secrète Django
+
+1. Ouvrez un terminal à la racine du projet.
+2. Exécutez la commande suivante pour générer une clé secrète Django :
+
+```shell
+python3 -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+```
+
+3. Copiez la clé générée et collez-la dans le fichier `.env` que vous avez créé précédemment sous la variable `SECRET_KEY`.
+
+#### Mise à jour de la base de données
+
+Après avoir configuré le fichier `.env`, vous devez effectuer les migrations nécessaires pour mettre à jour votre base de données. Voici comment faire :
+
+1. Assurez-vous d'être dans le répertoire `backend/backend` dans votre terminal.
+2. Exécutez les commandes suivantes :
+
+```shell
+python3 manage.py makemigrations
+python3 manage.py migrate
+```
+
+Ces commandes créeront les migrations nécessaires en fonction des modèles de votre application Django et les appliqueront à votre base de données.
+
+Avec ces étapes supplémentaires, votre backend devrait être correctement configuré pour fonctionner avec votre projet.
+
+#### Lancer l'application Django (backend)
 
 ```shell
 cd backend/backend && python3 manage.py runserver
 ```
 
-- Lancer l'application Vue.js (frontend)
+### Frontend
+#### Lancer l'application Vue.js (frontend)
 
 ```shell
 cd frontend && npm run dev
