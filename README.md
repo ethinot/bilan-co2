@@ -13,7 +13,7 @@ Les instructions qui suivent vont vous permettrent des lancer le projet en local
 
 - **TODO : tuto création du env python**
 
-- **TODO : prérequis pour le front ?**
+-  **Frontend** :  Node.js version 18+. 20+
 
 ### Folder structure
 
@@ -93,7 +93,7 @@ Les instructions qui suivent vont vous permettrent des lancer le projet en local
     `pip install -r requirement.txt `
 
     - pour le frontend :
-    Todo @
+    `cd frontend && npm install `
 
     
 
@@ -109,7 +109,9 @@ cd backend/backend && python3 manage.py runserver
 
 - Lancer l'application Vue.js (frontend)
 
-**TODO**
+```shell
+cd frontend && npm run dev
+```
 
 ## ⛏️ Built Using
 
@@ -119,8 +121,10 @@ cd backend/backend && python3 manage.py runserver
 - **TODO**
 
 ### Frontend
-- [Vite](https://vitejs.dev/) : serveur frontend
-- **TODO**
+- [Vite](https://vitejs.dev/) : Un outil de développement rapide pour la construction d'applications web modernes, Il se compose de deux parties principales :
+  * **Un serveur de développement**
+  * **Une commande de construction** qui regroupe votre code avec [Rollup](https://rollupjs.org/), pré-configuré pour 
+- [Vue.js](https://vuejs.org/) : Un framework JavaScript progressif pour la construction d'interfaces utilisateur dynamiques.
 
 
 
