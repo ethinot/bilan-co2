@@ -122,8 +122,8 @@ cd frontend && npm run dev
 
 ### Frontend
 - [Vite](https://vitejs.dev/) : Un outil de développement rapide pour la construction d'applications web modernes, Il se compose de deux parties principales :
-  * **Un serveur de développement**
-  * **Une commande de construction** qui regroupe votre code avec [Rollup](https://rollupjs.org/), pré-configuré pour 
+  * **Un serveur de développement**.
+  * **Une commande de construction** qui regroupe votre code avec [Rollup](https://rollupjs.org/), pré-configuré pour produire des ressources statiques hautement optimisées pour la production.
 - [Vue.js](https://vuejs.org/) : Un framework JavaScript progressif pour la construction d'interfaces utilisateur dynamiques.
 
 
